@@ -30,7 +30,7 @@ import com.e.tmdb.ui.theme.DarkBlue
 
 
 @Composable
-fun HomeScreen(navigateToDetails: (Int?) -> Unit) {
+fun HomeScreen(navigateToDetails: (Int) -> Unit) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -106,7 +106,7 @@ fun BottomNavigation(navController: NavController) {
 
 
 @Composable
-fun HomeNavigationGraph(navController: NavHostController, navigateToDetails: (Int?) -> Unit) {
+fun HomeNavigationGraph(navController: NavHostController, navigateToDetails: (Int) -> Unit) {
     NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
             Home(navigateToDetails)

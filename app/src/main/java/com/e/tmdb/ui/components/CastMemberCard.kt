@@ -1,6 +1,5 @@
 package com.e.tmdb.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,18 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.e.tmdb.R
 import com.e.tmdb.models.CastMember
 
 @Composable
 fun CastMemberCard(
-    member: CastMember,
-    modifier: Modifier
+    modifier: Modifier,
+    member: CastMember
 ) {
     Card(
         modifier = modifier
@@ -32,7 +32,7 @@ fun CastMemberCard(
         Column {
             Image(
                 painter = painterResource(id = member.imageUrl),
-                contentDescription = "Image of ${member.name}",
+                contentDescription = stringResource(R.string.image_description) + member.name,
                 alignment = Alignment.Center,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -45,14 +45,12 @@ fun CastMemberCard(
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp
             )
-            // Spacer(modifier = Modifier.padding(5.dp))
+
             Text(
                 text = member.characterName,
                 fontWeight = FontWeight.Thin,
                 fontSize = 10.sp
             )
-
-
         }
     }
 }

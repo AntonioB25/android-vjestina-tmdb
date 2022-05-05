@@ -17,9 +17,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.e.tmdb.models.MovieItem
 import com.e.tmdb.R
+import com.e.tmdb.models.MovieItem
 
 
 @ExperimentalMaterialApi
@@ -27,34 +28,34 @@ import com.e.tmdb.R
 fun MovieCard(
     modifier: Modifier = Modifier,
     item: MovieItem,
-    navigateToDetails: (Int?) -> Unit
+    navigateToDetails: (Int) -> Unit
 ) {
     Box(
         modifier
-            .height(180.dp)
-            .width(120.dp)
-            .padding(bottom = 10.dp)
             .clip(RoundedCornerShape(10.dp))
-            .clickable {  navigateToDetails(item.id)}
+            .clickable {
+                navigateToDetails(item.id)
+            }
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = item.imageUrl),
-            contentDescription = item.title + " cover",
+            contentDescription = stringResource(R.string.movie_cover),
             alignment = Alignment.Center,
             contentScale = ContentScale.Crop,
         )
 
-        FavouriteButton(modifier = Modifier)
+        FavouriteButton(modifier = Modifier, movieItem = item )
     }
 }
 
 @Composable
 fun FavouriteButton(
     modifier: Modifier,
-    color: Color = Color.White
+    color: Color = Color.White,
+    movieItem: MovieItem
 ) {
-    var isFavorite by remember { mutableStateOf(false) }
+    var isFavorite = movieItem.isFavorite
 
     IconToggleButton(
         checked = isFavorite,
@@ -62,7 +63,6 @@ fun FavouriteButton(
         modifier = modifier
             .clip(CircleShape)
             .background(Color(R.color.dark_blue).copy(0.6f))
-
     ) {
         Icon(
             tint = color,
@@ -71,17 +71,7 @@ fun FavouriteButton(
             } else {
                 Icons.Default.FavoriteBorder
             },
-            contentDescription = "Favourite button"
+            contentDescription = stringResource(R.string.button_description_favourite)
         )
     }
 }
-
-//@OptIn(ExperimentalMaterialApi::class)
-//@Composable
-//@Preview
-//fun MovieCardPreview() {
-//    MovieCard(
-//        item = MovieItem(1, "Ironman", R.drawable.ironman),
-//        navigateToDetails = navigateToDetails
-//    )
-//}

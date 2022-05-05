@@ -1,9 +1,7 @@
 package com.e.tmdb.ui.components
 
 import MovieCard
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
@@ -14,9 +12,9 @@ import com.e.tmdb.models.MovieItem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BaseMovieList(
+fun MovieList(
     list: List<MovieItem>,
-    navigateToDetails: (Int?) -> Unit
+    navigateToDetails: (Int) -> Unit
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -24,7 +22,14 @@ fun BaseMovieList(
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(list) { movie ->
-            MovieCard(modifier = Modifier, item = movie, navigateToDetails)
+            MovieCard(
+                modifier = Modifier
+                    .height(180.dp)
+                    .width(120.dp)
+                    .padding(bottom = 10.dp),
+                item = movie,
+                navigateToDetails = navigateToDetails
+            )
         }
     }
 }

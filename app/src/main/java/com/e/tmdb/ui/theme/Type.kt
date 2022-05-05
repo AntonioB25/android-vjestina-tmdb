@@ -20,13 +20,13 @@ val Typography = Typography(
         fontSize = 16.sp
     ),
 
-    h1 =  TextStyle(
+    h1 = TextStyle(
         fontFamily = Alata,
         fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
         color = DarkBlue
     ),
-    h2 =  TextStyle(
+    h2 = TextStyle(
         fontFamily = Alata,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,

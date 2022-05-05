@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -33,11 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.e.tmdb.R
 import com.e.tmdb.models.CastMember
+import com.e.tmdb.models.MovieDetails
 import com.e.tmdb.models.MovieItem
 
 @Composable
 fun MovieDetails(
-    id: Int?
+    id: Int,
 ) {
     LazyColumn() {
         item {
@@ -66,7 +68,7 @@ fun ImageAndInfo() {
 
         Image(
             painter = painterResource(id = R.drawable.ironman),
-            contentDescription = "Movie cover",
+            contentDescription = stringResource(id = R.string.movie_cover),
             modifier = Modifier
                 .fillMaxSize()
                 .drawWithCache {
@@ -94,7 +96,7 @@ fun ImageAndInfo() {
             Row(verticalAlignment = CenterVertically) {
                 CircularProgressIndicator(color = Color.Green, progress = 0.74f)
                 Text(
-                    text = "User Score",
+                    text = stringResource(R.string.label_user_score),
                     modifier = Modifier
                         .align(CenterVertically)
                         .padding(start = 10.dp),
@@ -138,7 +140,7 @@ fun Overview(
 ) {
     Text(
         modifier = modifier,
-        text = "Overview",
+        text = stringResource(R.string.label_overview),
         style = MaterialTheme.typography.h1,
     )
 
@@ -149,10 +151,7 @@ fun Overview(
     )
 
     Spacer(Modifier.padding(10.dp))
-    /**
-     * Trenutno imam samo listu stringova, nisam htio raditi posebnu klasu za osobe
-     * Ne znam kako će kasnije ti objekti izgledati pa mi je ovako jednostavnije za trenutni prikaz
-     */
+
     var crew = listOf("Don Heck", "Jack Kirby", "Jack Marcum", "Matt Holloway")
 
     LazyRow(
@@ -164,26 +163,9 @@ fun Overview(
             StaffCard(
                 name = member,
                 job = member
-            ) //trenutno predajem isto jer mi je jednostavnije dok nema podataka
+            ) // for simplicity I am sending same value
         }
     }
-
-    /**PROBLEM JER IMAM 2 SCROLLABLE-a**/
-//    LazyVerticalGrid(
-//        modifier = modifier,
-//        cells = GridCells.Fixed(3),
-//    ) {
-//        items(crew) { person ->
-//            Column {
-//                Text(
-//                    text = person,                              // bilo bi person.name + person.lastName
-//                    fontWeight = FontWeight.Bold,
-//                    modifier = Modifier.padding(top = 10.dp)
-//                )
-//                Text(text = person)                             // bilo bi person.role
-//            }
-//        }
-//    }
 }
 
 @Composable
@@ -200,10 +182,10 @@ fun StaffCard(name: String, job: String) {
 
 
 var cast = mutableListOf(
-    CastMember("Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
-    CastMember("Terrence Howard", "James Rhodes", R.drawable.terrence),
-    CastMember("Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
-    CastMember("Terrence Howard", "James Rhodes", R.drawable.terrence),
+    CastMember(1,"Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
+    CastMember(2,"Terrence Howard", "James Rhodes", R.drawable.terrence),
+    CastMember(3,"Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
+    CastMember(4,"Terrence Howard", "James Rhodes", R.drawable.terrence),
 )
 
 @Composable
@@ -213,7 +195,7 @@ fun Cast(
     Column(modifier = modifier) {
         Row(verticalAlignment = CenterVertically) {
             Text(
-                text = "Top Billed Cast",
+                text = stringResource(R.string.label_top_billed),
                 style = MaterialTheme.typography.h1,
             )
 
@@ -224,7 +206,7 @@ fun Cast(
                     //TODO: show full cast & crew
                 },
             ) {
-                Text(text = "Full Cast & Crew", style = MaterialTheme.typography.h2)
+                Text(text = stringResource(R.string.label_full_cast), style = MaterialTheme.typography.h2)
             }
         }
 

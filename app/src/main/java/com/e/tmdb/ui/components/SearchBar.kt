@@ -1,8 +1,10 @@
 package com.e.tmdb.ui.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -18,16 +20,12 @@ import com.e.tmdb.R
 @ExperimentalMaterialApi
 @Composable
 fun SearchBar(
-    text: String,
     modifier: Modifier,
-    onTextChange: (String) -> Unit
 ) {
     var inputText by remember { mutableStateOf("") }
 
-
     Surface(
         modifier = Modifier.padding(16.dp)
-
     ) {
         TextField(
             value = inputText,
@@ -47,7 +45,7 @@ fun SearchBar(
                         .fillMaxHeight(),
                     text = "Search...",
                     color = Color.White
-                    )
+                )
             },
             singleLine = true,
             leadingIcon = {
@@ -61,13 +59,9 @@ fun SearchBar(
     }
 }
 
-
-
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Preview
-fun SearchPreview(){
-    SearchBar(text = "", onTextChange = {}, modifier = Modifier)
+fun SearchPreview() {
+    SearchBar(modifier = Modifier)
 }
-

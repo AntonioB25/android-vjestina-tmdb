@@ -24,7 +24,7 @@ fun MainScreen(
 
 
 @Composable
-fun MainNavigationGraph(navController: NavHostController, navigateToDetails: (Int?) -> Unit) {
+fun MainNavigationGraph(navController: NavHostController, navigateToDetails: (Int) -> Unit) {
     NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
             HomeScreen(navigateToDetails)

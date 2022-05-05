@@ -8,8 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.e.tmdb.models.MovieItem
 import com.e.tmdb.R
+import com.e.tmdb.models.MovieItem
 
 /**
  * Shows list of popular movies
@@ -19,7 +19,7 @@ import com.e.tmdb.R
 @Composable
 fun PopularList(
     movieList: MutableList<MovieItem>,
-    navigateToDetails: (Int?) -> Unit
+    navigateToDetails: (Int) -> Unit
 ) {
     var movies by remember {
         mutableStateOf(
@@ -81,13 +81,6 @@ fun PopularList(
             }
         }
 
-        BaseMovieList(list = movies, navigateToDetails = navigateToDetails)
+        MovieList(list = movies, navigateToDetails = navigateToDetails)
     }
 }
-
-//@Composable
-//@Preview
-//fun prevList() {
-//
-//    PopularList(emptyList<MovieItem>() as MutableList<MovieItem>, navigateToDetails)
-//}
