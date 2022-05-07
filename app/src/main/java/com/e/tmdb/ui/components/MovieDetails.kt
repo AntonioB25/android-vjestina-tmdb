@@ -33,9 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.e.tmdb.R
-import com.e.tmdb.models.CastMember
+import com.e.tmdb.models.movieCredits.CastMember
 import com.e.tmdb.models.movie.Movie
-import com.e.tmdb.models.movieDetails.MovieDetails
 
 @Composable
 fun MovieDetails(

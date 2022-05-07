@@ -17,7 +17,6 @@ import com.e.tmdb.viewModel.HomeViewModel
 fun MainScreen(
     navController: NavHostController,
     navigateToDetails: (Int?) -> Unit,
-    homeViewModel: HomeViewModel
 ) {
 
     Scaffold() {

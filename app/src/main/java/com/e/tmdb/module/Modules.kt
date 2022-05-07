@@ -6,6 +6,7 @@ import com.e.tmdb.networking.MovieApiImpl
 import com.e.tmdb.respository.MovieRepository
 import com.e.tmdb.respository.MovieRepositoryImpl
 import com.e.tmdb.viewModel.HomeViewModel
+import com.e.tmdb.viewModel.MovieDetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,5 +23,11 @@ val movieRepositoryModule = module{
 val homeViewModelModule = module {
     viewModel {
         HomeViewModel(get())
+    }
+}
+
+val movieDetailsViewModelModule = module{
+    viewModel {
+        MovieDetailsViewModel(get())
     }
 }

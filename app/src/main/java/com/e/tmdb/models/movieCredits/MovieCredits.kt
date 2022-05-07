@@ -1,4 +1,7 @@
 package com.e.tmdb.models.movieCredits
 
-class MovieCredits {
-}
+data class MovieCredits (
+    val id: Int,
+    val cast: List<CastMember>,
+    val crew: List<CrewMember>
+        )

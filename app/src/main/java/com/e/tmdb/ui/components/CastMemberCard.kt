@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.e.tmdb.R
-import com.e.tmdb.models.CastMember
+import com.e.tmdb.models.movieCredits.CastMember
 
 @Composable
 fun CastMemberCard(
