@@ -33,23 +33,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.e.tmdb.R
-import com.e.tmdb.models.movieCredits.CastMember
 import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.models.movieCredits.CastMember
+import com.e.tmdb.models.movieCredits.MovieCredits
+import com.e.tmdb.models.movieDetails.MovieDetails
+import com.e.tmdb.viewModel.MovieDetailsViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MovieDetails(
-    id: Int?,
+    movieId: Int,
 ) {
+    val detailsViewModel = getViewModel<MovieDetailsViewModel>()
+    val movieDetails = detailsViewModel.getMovieDetails(movieId)
+    val movieCredits = detailsViewModel.getMovieCredits(movieId)
+
     LazyColumn() {
         item {
-            ImageAndInfo()
+            ImageAndInfo(movieDetails)
             Spacer(Modifier.padding(10.dp))
-            Overview(Modifier.padding(start = 10.dp))
+
+            Overview(Modifier.padding(start = 10.dp), movieDetails)
             Spacer(Modifier.padding(10.dp))
-            Cast(Modifier.padding(start = 10.dp))
+
+            Cast(Modifier.padding(start = 10.dp), movieCredits)
             Spacer(Modifier.padding(10.dp))
+
             Social(Modifier.padding(start = 10.dp))
             Spacer(Modifier.padding(10.dp))
+
             Recommendations()
         }
     }
@@ -57,7 +69,9 @@ fun MovieDetails(
 
 
 @Composable
-fun ImageAndInfo() {
+fun ImageAndInfo(
+    movieDetails: MovieDetails?
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,7 +80,7 @@ fun ImageAndInfo() {
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.ironman),
+            painter = painterResource(id = R.drawable.godzzila),
             contentDescription = stringResource(id = R.string.movie_cover),
             modifier = Modifier
                 .fillMaxSize()
@@ -107,7 +121,7 @@ fun ImageAndInfo() {
 
             Spacer(modifier = Modifier.padding(10.dp))
             Text(
-                text = "Iron man (2008)",
+                text = movieDetails.title,
                 fontSize = 20.sp,
                 color = Color.White
             )
@@ -135,7 +149,8 @@ fun ImageAndInfo() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Overview(
-    modifier: Modifier
+    modifier: Modifier,
+    movieDetails: MovieDetails?
 ) {
     Text(
         modifier = modifier,
@@ -189,7 +204,8 @@ var cast = mutableListOf(
 
 @Composable
 fun Cast(
-    modifier: Modifier
+    modifier: Modifier,
+    movieCredits: MovieCredits?
 ) {
     Column(modifier = modifier) {
         Row(verticalAlignment = CenterVertically) {

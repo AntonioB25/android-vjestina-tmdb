@@ -6,7 +6,6 @@ data class CrewMember(
     val gender: Int?,
     val job: String,
     val department: String,
-    val knownForDepartment: String, // maybe not needed
-    val characterName: String,      // SerialName (character)
-    val imageUrl: Int,              // SerialName (profile_path)
+    val knownForDepartment: String,     // maybe not needed
+    val imageUrl: String,               // SerialName (profile_path)
 )

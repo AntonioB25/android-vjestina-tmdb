@@ -4,7 +4,7 @@ data class CastMember(
     val id: Int,
     val name: String,
     val characterName: String,      // SerialName (character)
-    val imageUrl: Int,              // SerialName (profile_path)
+    val imageUrl: String,              // SerialName (profile_path)
     val gender: Int?,
     val castId: Int,                // maybe not needed
     val creditId: Int,              // maybe not needed

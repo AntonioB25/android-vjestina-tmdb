@@ -1,4 +1,5 @@
 package com.e.tmdb.models.movieCredits
 
-class MovieCreditsResponse {
-}
+data class MovieCreditsResponse(
+    val movieCredits: MovieCredits
+)
