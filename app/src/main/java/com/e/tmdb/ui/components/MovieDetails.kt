@@ -34,12 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.e.tmdb.R
 import com.e.tmdb.models.CastMember
-import com.e.tmdb.models.MovieDetails
-import com.e.tmdb.models.MovieItem
+import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.models.movieDetails.MovieDetails
 
 @Composable
 fun MovieDetails(
-    id: Int,
+    id: Int?,
 ) {
     LazyColumn() {
         item {
@@ -182,10 +182,10 @@ fun StaffCard(name: String, job: String) {
 
 
 var cast = mutableListOf(
-    CastMember(1,"Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
-    CastMember(2,"Terrence Howard", "James Rhodes", R.drawable.terrence),
-    CastMember(3,"Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
-    CastMember(4,"Terrence Howard", "James Rhodes", R.drawable.terrence),
+    CastMember(1, "Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
+    CastMember(2, "Terrence Howard", "James Rhodes", R.drawable.terrence),
+    CastMember(3, "Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
+    CastMember(4, "Terrence Howard", "James Rhodes", R.drawable.terrence),
 )
 
 @Composable
@@ -206,7 +206,10 @@ fun Cast(
                     //TODO: show full cast & crew
                 },
             ) {
-                Text(text = stringResource(R.string.label_full_cast), style = MaterialTheme.typography.h2)
+                Text(
+                    text = stringResource(R.string.label_full_cast),
+                    style = MaterialTheme.typography.h2
+                )
             }
         }
 
@@ -255,9 +258,9 @@ fun Social(modifier: Modifier) {
 @Composable
 fun Recommendations() {
     var reccoms = listOf(
-        MovieItem(1, "Ironman", R.drawable.ironman),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love),
+        Movie(1, "Ironman", R.drawable.ironman),
+        Movie(2, "Godzzila", R.drawable.godzzila),
+        Movie(3, "Puppy Love", R.drawable.puppy_love),
     )
 
 

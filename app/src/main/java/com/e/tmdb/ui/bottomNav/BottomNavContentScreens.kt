@@ -2,10 +2,7 @@ package com.e.tmdb.ui.bottomNav
 
 import MovieCard
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
@@ -19,24 +16,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.e.tmdb.R
-import com.e.tmdb.models.MovieItem
+import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.ui.components.MovieList
 import com.e.tmdb.ui.components.PopularList
 import com.e.tmdb.ui.components.SearchBar
+import com.e.tmdb.viewModel.HomeViewModel
+import org.koin.androidx.compose.getViewModel
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Home(navigateToDetails: (Int) -> Unit) {
-    var moviesList: MutableList<MovieItem> = mutableListOf(
-        MovieItem(1, "Ironman", R.drawable.ironman),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love),
-        MovieItem(4, "Ironman", R.drawable.ironman),
-        MovieItem(5, "Godzzila", R.drawable.godzzila),
-        MovieItem(6, "Puppy Love", R.drawable.puppy_love)
-    )
+fun Home(
+    navigateToDetails: (Int) -> Unit,
+) {
+    val homeViewModel = getViewModel<HomeViewModel>()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
@@ -45,17 +40,20 @@ fun Home(navigateToDetails: (Int) -> Unit) {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
 
-        PopularList(movieList = moviesList, navigateToDetails = navigateToDetails)
+        PopularList(
+            movieList = homeViewModel.getPopularMovies(),
+            navigateToDetails = navigateToDetails
+        )
 
         MovieCategory(
             categoryTitle = stringResource(id = R.string.category_now_playing),
-            movieList = moviesList,
+            movieList = homeViewModel.getNowPlayingMovies(),
             navigateToDetails = navigateToDetails
         )
 
         MovieCategory(
             categoryTitle = stringResource(id = R.string.category_upcoming),
-            movieList = moviesList,
+            movieList = homeViewModel.getUpcomingMovies(),
             navigateToDetails = navigateToDetails
         )
 
@@ -66,7 +64,7 @@ fun Home(navigateToDetails: (Int) -> Unit) {
 @Composable
 fun MovieCategory(
     categoryTitle: String,
-    movieList: List<MovieItem>,
+    movieList: List<Movie>,
     navigateToDetails: (Int) -> Unit
 ) {
     Text(
@@ -80,13 +78,15 @@ fun MovieCategory(
 
 @OptIn(ExperimentalFoundationApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
 @Composable
-fun FavouritesScreen(navigateToDetails: (Int) -> Unit) {
+fun FavouritesScreen(
+    navigateToDetails: (Int) -> Unit,
+) {
     var favourites = mutableListOf(
-        MovieItem(1, "Ironman", R.drawable.ironman),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love)
+        Movie(1, "Ironman", R.drawable.ironman),
+        Movie(2, "Godzzila", R.drawable.godzzila),
+        Movie(3, "Puppy Love", R.drawable.puppy_love),
+        Movie(2, "Godzzila", R.drawable.godzzila),
+        Movie(3, "Puppy Love", R.drawable.puppy_love)
     )
 
     Column(
@@ -99,14 +99,17 @@ fun FavouritesScreen(navigateToDetails: (Int) -> Unit) {
             modifier = Modifier.padding(start = 10.dp)
         )
 
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
         LazyVerticalGrid(
-            cells = GridCells.Adaptive(minSize = 120.dp),
+            cells = GridCells.Fixed(2),
+            contentPadding = PaddingValues(3.dp)
         ) {
             items(favourites) { movie ->
                 MovieCard(
                     item = movie,
-                    modifier = Modifier.padding(5.dp),
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .height(250.dp),
                     navigateToDetails = navigateToDetails
                 )
             }

@@ -27,10 +27,13 @@ import com.e.tmdb.ui.bottomNav.BottomNavItem
 import com.e.tmdb.ui.bottomNav.FavouritesScreen
 import com.e.tmdb.ui.bottomNav.Home
 import com.e.tmdb.ui.theme.DarkBlue
+import com.e.tmdb.viewModel.HomeViewModel
 
 
 @Composable
-fun HomeScreen(navigateToDetails: (Int) -> Unit) {
+fun HomeScreen(
+    navigateToDetails: (Int) -> Unit,
+) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -52,8 +55,13 @@ fun HomeScreen(navigateToDetails: (Int) -> Unit) {
             }
         },
         bottomBar = { BottomNavigation(navController = navController) }
-    ) {
-        HomeNavigationGraph(navController = navController, navigateToDetails)
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            HomeNavigationGraph(
+                navController = navController,
+                navigateToDetails = navigateToDetails,
+            )
+        }
     }
 }
 
@@ -106,7 +114,10 @@ fun BottomNavigation(navController: NavController) {
 
 
 @Composable
-fun HomeNavigationGraph(navController: NavHostController, navigateToDetails: (Int) -> Unit) {
+fun HomeNavigationGraph(
+    navController: NavHostController,
+    navigateToDetails: (Int) -> Unit,
+) {
     NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
             Home(navigateToDetails)

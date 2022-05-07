@@ -1,6 +1,6 @@
-package com.e.tmdb.models
+package com.e.tmdb.models.movie
 
-data class MovieItem(
+data class Movie(
     val id: Int,
     val title: String,
     val imageUrl: Int,

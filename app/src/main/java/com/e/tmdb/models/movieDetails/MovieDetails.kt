@@ -1,4 +1,4 @@
-package com.e.tmdb.models
+package com.e.tmdb.models.movieDetails
 
 data class MovieDetails(
     val id: Int
