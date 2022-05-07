@@ -1,7 +1,8 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -20,14 +21,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.e.tmdb.R
-import com.e.tmdb.models.MovieItem
+import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.viewModel.HomeViewModel
+import org.koin.androidx.compose.getViewModel
 
 
 @ExperimentalMaterialApi
 @Composable
 fun MovieCard(
     modifier: Modifier = Modifier,
-    item: MovieItem,
+    item: Movie,
     navigateToDetails: (Int) -> Unit
 ) {
     Box(
@@ -45,7 +48,7 @@ fun MovieCard(
             contentScale = ContentScale.Crop,
         )
 
-        FavouriteButton(modifier = Modifier, movieItem = item )
+        FavouriteButton(modifier = Modifier, movie = item)
     }
 }
 
@@ -53,20 +56,30 @@ fun MovieCard(
 fun FavouriteButton(
     modifier: Modifier,
     color: Color = Color.White,
-    movieItem: MovieItem
+    movie: Movie
 ) {
-    var isFavorite = movieItem.isFavorite
+    var isFavorite by remember { mutableStateOf(movie.isFavorite) }
+    val homeViewModel = getViewModel<HomeViewModel>()
 
     IconToggleButton(
         checked = isFavorite,
-        onCheckedChange = { isFavorite = !isFavorite },
+        onCheckedChange = {
+            isFavorite = !isFavorite
+            movie.isFavorite = isFavorite
+
+            if (isFavorite) {
+                homeViewModel.addToFavourites(movie)
+            } else {
+                homeViewModel.removeFromFavourites(movie)
+            }
+        },
         modifier = modifier
             .clip(CircleShape)
             .background(Color(R.color.dark_blue).copy(0.6f))
     ) {
         Icon(
             tint = color,
-            imageVector = if (isFavorite) {
+            imageVector = if (movie.isFavorite) {
                 Icons.Filled.Favorite
             } else {
                 Icons.Default.FavoriteBorder

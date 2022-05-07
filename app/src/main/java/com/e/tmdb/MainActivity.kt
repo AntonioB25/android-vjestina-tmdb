@@ -8,7 +8,6 @@ import com.e.tmdb.ui.screens.MainScreen
 import com.e.tmdb.ui.theme.TMDBTheme
 
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -18,7 +17,10 @@ class MainActivity : ComponentActivity() {
             }
 
             TMDBTheme {
-                MainScreen(navController = navController, navigateToDetails = ::navigateToDetails)
+                MainScreen(
+                    navController = navController,
+                    navigateToDetails = ::navigateToDetails,
+                )
             }
         }
     }

@@ -13,11 +13,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.e.tmdb.models.MovieItem
+import com.e.tmdb.models.movie.Movie
 
 
 @Composable
-fun RecommendationCard(movie: MovieItem) {
+fun RecommendationCard(movie: Movie) {
 
     Card(
         elevation = 5.dp,

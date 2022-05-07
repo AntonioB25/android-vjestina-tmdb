@@ -13,18 +13,24 @@ import com.e.tmdb.ui.bottomNav.BottomNavItem
 @Composable
 fun MainScreen(
     navController: NavHostController,
-    navigateToDetails: (Int?) -> Unit
+    navigateToDetails: (Int?) -> Unit,
 ) {
 
     Scaffold() {
-        MainNavigationGraph(navController = navController, navigateToDetails = navigateToDetails)
+        MainNavigationGraph(
+            navController = navController,
+            navigateToDetails = navigateToDetails,
+        )
     }
 
 }
 
 
 @Composable
-fun MainNavigationGraph(navController: NavHostController, navigateToDetails: (Int) -> Unit) {
+fun MainNavigationGraph(
+    navController: NavHostController,
+    navigateToDetails: (Int) -> Unit,
+) {
     NavHost(navController, startDestination = BottomNavItem.Home.screen_route) {
         composable(BottomNavItem.Home.screen_route) {
             HomeScreen(navigateToDetails)
@@ -34,7 +40,7 @@ fun MainNavigationGraph(navController: NavHostController, navigateToDetails: (In
             "details/{movieId}",
             arguments = listOf(navArgument("movieId") { type = NavType.IntType })
         ) { navBackStackEntry ->
-            DetailsScreen(moveId = navBackStackEntry.arguments?.getInt("movieId"))
+            DetailsScreen(movieId = navBackStackEntry.arguments?.getInt("movieId")!!)       // is this good?
         }
     }
 }
