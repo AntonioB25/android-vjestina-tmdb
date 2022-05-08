@@ -80,13 +80,7 @@ fun MovieCategory(
 fun FavouritesScreen(
     navigateToDetails: (Int) -> Unit,
 ) {
-    var favourites = mutableListOf(
-        Movie(1, "Ironman", R.drawable.ironman),
-        Movie(2, "Godzzila", R.drawable.godzzila),
-        Movie(3, "Puppy Love", R.drawable.puppy_love),
-        Movie(2, "Godzzila", R.drawable.godzzila),
-        Movie(3, "Puppy Love", R.drawable.puppy_love)
-    )
+    val homeViewModel = getViewModel<HomeViewModel>()
 
     Column(
         modifier = Modifier
@@ -103,7 +97,7 @@ fun FavouritesScreen(
             cells = GridCells.Fixed(2),
             contentPadding = PaddingValues(3.dp)
         ) {
-            items(favourites) { movie ->
+            items(homeViewModel.getFavouriteMovies()) { movie ->
                 MovieCard(
                     item = movie,
                     modifier = Modifier

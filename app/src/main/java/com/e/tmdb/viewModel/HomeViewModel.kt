@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
+
+//TODO: fix
+
 class HomeViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
@@ -45,6 +48,18 @@ class HomeViewModel(
             movies = movieRepository.getUpcomingMovies().flattenToList()
         }
         return movies
+    }
+
+    fun addToFavourites(movie: Movie){
+        movieRepository.addToFavourites(movie)
+    }
+
+    fun removeFromFavourites(movie: Movie){
+        movieRepository.removeFromFavourites(movie)
+    }
+
+    fun getFavouriteMovies(): List<Movie>{
+        return movieRepository.getFavouriteMovies()
     }
 
 

@@ -17,7 +17,8 @@ class MyApp : Application() {
                     movieApiModule,
                     movieRepositoryModule,
                     movieDetailsViewModelModule,
-                    movieDetailsRepositoryModule
+                    movieDetailsRepositoryModule,
+                    databaseModule
                 )
             )
         }

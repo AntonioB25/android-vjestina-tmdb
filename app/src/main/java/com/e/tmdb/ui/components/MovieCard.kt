@@ -11,7 +11,7 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,6 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.e.tmdb.R
 import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.viewModel.HomeViewModel
+import org.koin.androidx.compose.getViewModel
 
 
 @ExperimentalMaterialApi
@@ -56,11 +58,20 @@ fun FavouriteButton(
     color: Color = Color.White,
     movie: Movie
 ) {
-    var isFavorite = movie.isFavorite
+    var isFavorite by remember { mutableStateOf(movie.isFavorite)}
+    val homeViewModel = getViewModel<HomeViewModel>()
 
     IconToggleButton(
         checked = isFavorite,
-        onCheckedChange = { isFavorite = !isFavorite },
+        onCheckedChange = {
+            isFavorite = !isFavorite
+            movie.isFavorite = isFavorite
+            if(isFavorite){
+                homeViewModel.addToFavourites(movie)
+            }else{
+                homeViewModel.removeFromFavourites(movie)
+            }
+        },
         modifier = modifier
             .clip(CircleShape)
             .background(Color(R.color.dark_blue).copy(0.6f))

@@ -1,6 +1,7 @@
 package com.e.tmdb.module
 
 
+import com.e.tmdb.database.FavouritesDatabase
 import com.e.tmdb.networking.MovieApi
 import com.e.tmdb.networking.MovieApiImpl
 import com.e.tmdb.respository.MovieDetailsRepository
@@ -18,8 +19,8 @@ val movieApiModule = module {
 }
 
 val movieRepositoryModule = module {
-    single { MovieRepositoryImpl(get()) }
-    single<MovieRepository> { MovieRepositoryImpl(get()) }
+    single { MovieRepositoryImpl(get(), get()) }
+    single<MovieRepository> { MovieRepositoryImpl(get(), get()) }
 }
 
 val movieDetailsRepositoryModule = module {
@@ -37,4 +38,8 @@ val movieDetailsViewModelModule = module {
     viewModel {
         MovieDetailsViewModel(get())
     }
+}
+
+val databaseModule = module{
+    single{FavouritesDatabase(mutableListOf())}
 }
