@@ -23,15 +23,11 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.e.tmdb.R
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movieCredits.CastMember
@@ -53,7 +49,7 @@ fun MovieDetails(
             ImageAndInfo(movieDetails)
             Spacer(Modifier.padding(10.dp))
 
-            Overview(Modifier.padding(start = 10.dp), movieDetails)
+            Overview(Modifier.padding(start = 10.dp), movieDetails, movieCredits)
             Spacer(Modifier.padding(10.dp))
 
             Cast(Modifier.padding(start = 10.dp), movieCredits)
@@ -70,7 +66,7 @@ fun MovieDetails(
 
 @Composable
 fun ImageAndInfo(
-    movieDetails: MovieDetails?
+    movieDetails: MovieDetails
 ) {
     Box(
         modifier = Modifier
@@ -80,7 +76,7 @@ fun ImageAndInfo(
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.godzzila),
+            painter = rememberAsyncImagePainter(movieDetails.posterPath),
             contentDescription = stringResource(id = R.string.movie_cover),
             modifier = Modifier
                 .fillMaxSize()
@@ -126,18 +122,20 @@ fun ImageAndInfo(
                 color = Color.White
             )
 
+            Spacer(modifier = Modifier.padding(10.dp))
+
             Text(
-                text = "05/02/2008 (US)",
+                text = movieDetails.releaseDate + " (" + movieDetails.productionCountries[0].iso_3166_1 + ")",
                 color = Color.White
             )
             Text(
-                buildAnnotatedString {
-                    append("Action, Science Fiction  ")
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("2h 6m")
-                    }
-                },
+                text = movieDetails.genres.joinToString(",") { it.name },
                 color = Color.White
+            )
+            Text(
+                text = getFormattedTime(movieDetails.runtime),
+                color = Color.White,
+                fontWeight = FontWeight.Bold
             )
 
             StarButton(modifier = Modifier.padding(top = 20.dp, bottom = 10.dp))
@@ -150,7 +148,8 @@ fun ImageAndInfo(
 @Composable
 fun Overview(
     modifier: Modifier,
-    movieDetails: MovieDetails?
+    movieDetails: MovieDetails,
+    movieCredits: MovieCredits
 ) {
     Text(
         modifier = modifier,
@@ -161,23 +160,21 @@ fun Overview(
     Spacer(Modifier.padding(10.dp))
     Text(
         modifier = modifier,
-        text = "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil."
+        text = movieDetails.overview
     )
 
     Spacer(Modifier.padding(10.dp))
-
-    var crew = listOf("Don Heck", "Jack Kirby", "Jack Marcum", "Matt Holloway")
 
     LazyRow(
         modifier = modifier,
         contentPadding = PaddingValues(10.dp),
         horizontalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        items(crew) { member ->
+        items(movieCredits.crew) { member -> // should I show all crew members, or only some?
             StaffCard(
-                name = member,
-                job = member
-            ) // for simplicity I am sending same value
+                name = member.name,
+                job = member.job
+            )
         }
     }
 }
@@ -195,17 +192,10 @@ fun StaffCard(name: String, job: String) {
 }
 
 
-var cast = mutableListOf(
-    CastMember(1, "Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
-    CastMember(2, "Terrence Howard", "James Rhodes", R.drawable.terrence),
-    CastMember(3, "Robert Downey Jr.", "Tony Stark/Iron man", R.drawable.rdj),
-    CastMember(4, "Terrence Howard", "James Rhodes", R.drawable.terrence),
-)
-
 @Composable
 fun Cast(
     modifier: Modifier,
-    movieCredits: MovieCredits?
+    movieCredits: MovieCredits
 ) {
     Column(modifier = modifier) {
         Row(verticalAlignment = CenterVertically) {
@@ -228,7 +218,7 @@ fun Cast(
             }
         }
 
-        CastList(list = cast)
+        CastList(list = movieCredits.cast)
     }
 }
 
@@ -301,7 +291,7 @@ fun Recommendations() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CastList(list: MutableList<CastMember>) {
+fun CastList(list: List<CastMember>) {
     LazyRow(
         contentPadding = PaddingValues(10.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -334,13 +324,16 @@ fun StarButton(
             } else {
                 Icons.Outlined.Star
             },
-            contentDescription = "Star button"
+            contentDescription = null
         )
     }
 }
 
-@Composable
-@Preview
-fun movdetPreviews() {
-    MovieDetails(id = 2)
+
+fun getFormattedTime(minutes: Int?): String {
+    if (minutes == null) return "N.A"
+    val hours: Int = minutes / 60
+    val mins: Int = minutes % 60
+    return ("%d h %02d m").format(hours, mins)
 }
+

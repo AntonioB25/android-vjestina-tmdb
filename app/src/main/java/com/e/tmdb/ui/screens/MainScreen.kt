@@ -2,15 +2,12 @@ package com.e.tmdb.ui.screens
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.e.tmdb.module.homeViewModelModule
 import com.e.tmdb.ui.bottomNav.BottomNavItem
-import com.e.tmdb.viewModel.HomeViewModel
 
 
 @Composable
@@ -43,7 +40,7 @@ fun MainNavigationGraph(
             "details/{movieId}",
             arguments = listOf(navArgument("movieId") { type = NavType.IntType })
         ) { navBackStackEntry ->
-            DetailsScreen(moveId = navBackStackEntry.arguments?.getInt("movieId"))
+            DetailsScreen(movieId = navBackStackEntry.arguments?.getInt("movieId")!!)       // is this good?
         }
     }
 }

@@ -14,17 +14,17 @@ import org.koin.dsl.module
 
 val movieApiModule = module {
     single { MovieApiImpl() }
-    single<MovieApi> {MovieApiImpl()}
+    single<MovieApi> { MovieApiImpl() }
 }
 
-val movieRepositoryModule = module{
+val movieRepositoryModule = module {
     single { MovieRepositoryImpl(get()) }
-    single<MovieRepository> {MovieRepositoryImpl(get())}
+    single<MovieRepository> { MovieRepositoryImpl(get()) }
 }
 
-val movieDetailsRepositoryModule = module{
+val movieDetailsRepositoryModule = module {
     single { MovieDetailsRepositoryImpl(get()) }
-    single<MovieDetailsRepository> {MovieDetailsRepositoryImpl(get())}
+    single<MovieDetailsRepository> { MovieDetailsRepositoryImpl(get()) }
 }
 
 val homeViewModelModule = module {
@@ -33,7 +33,7 @@ val homeViewModelModule = module {
     }
 }
 
-val movieDetailsViewModelModule = module{
+val movieDetailsViewModelModule = module {
     viewModel {
         MovieDetailsViewModel(get())
     }

@@ -13,7 +13,7 @@ interface MovieDetailsRepository {
 
 internal class MovieDetailsRepositoryImpl(
     private val movieApi: MovieApi
-): MovieDetailsRepository{
+) : MovieDetailsRepository {
     override suspend fun getMovieDetails(movieId: Int): Flow<MovieDetails> {
         return flow {
             val movieDetails = movieApi.getMovieDetails(movieId).movieDetails

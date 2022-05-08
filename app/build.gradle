@@ -56,9 +56,13 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1"
-    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
     //Koin
     implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
+    //Coil
+    implementation "io.coil-kt:coil-compose:2.0.0-rc01"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

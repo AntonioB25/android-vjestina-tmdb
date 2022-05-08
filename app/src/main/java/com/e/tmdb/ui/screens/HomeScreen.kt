@@ -27,7 +27,6 @@ import com.e.tmdb.ui.bottomNav.BottomNavItem
 import com.e.tmdb.ui.bottomNav.FavouritesScreen
 import com.e.tmdb.ui.bottomNav.Home
 import com.e.tmdb.ui.theme.DarkBlue
-import com.e.tmdb.viewModel.HomeViewModel
 
 
 @Composable

@@ -23,7 +23,7 @@ class HomeViewModel(
         return movies
     }
 
-    fun getTopRatedMovies(): List<Movie>{
+    fun getTopRatedMovies(): List<Movie> {
         var movies: List<Movie> = emptyList()
         viewModelScope.launch {
             movies = movieRepository.getTopRatedMovies().flattenToList()

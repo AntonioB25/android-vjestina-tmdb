@@ -1,7 +1,7 @@
 package com.e.tmdb.networking
 
 import com.e.tmdb.R
-import com.e.tmdb.models.*
+import com.e.tmdb.models.MovieSearchResponse
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movie.MovieResponse
 import com.e.tmdb.models.movieCredits.CastMember
@@ -92,27 +92,31 @@ internal class MovieApiImpl : MovieApi {
     override suspend fun getMovieCredits(movieId: Int): MovieCreditsResponse = MovieCreditsResponse(
         movieCredits = MovieCredits(
             3,
-            listOf(CastMember(
-                2,
-                "Robert Downey Jr.",
-                "Tony Stark",
-                R.drawable.rdj.toString(),
-                2,
-                3,
-                4,
-                "Acting",
-                true,
-                0,
-            )),
-            listOf(CrewMember(
-                1,
-                "Don Heck",
-                2,
-                "Director",
-                "Direction",
-                "Direction",
-                "nestonesto.jpg",
-            ))
+            listOf(
+                CastMember(
+                    2,
+                    "Robert Downey Jr.",
+                    "Tony Stark",
+                    R.drawable.rdj.toString(),
+                    2,
+                    3,
+                    4,
+                    "Acting",
+                    true,
+                    0,
+                )
+            ),
+            listOf(
+                CrewMember(
+                    1,
+                    "Don Heck",
+                    2,
+                    "Director",
+                    "Direction",
+                    "Direction",
+                    "nestonesto.jpg",
+                )
+            )
         )
     )
 
