@@ -1,5 +1,10 @@
 package com.e.tmdb.models.movie
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class MovieListResponse(
-    val movies: List<Movie>
+    @SerialName("results")
+    val movies: List<MovieResponse>
 )

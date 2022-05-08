@@ -2,6 +2,7 @@ package com.e.tmdb.respository
 
 import com.e.tmdb.database.FavouritesDatabase
 import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.models.movie.toMovie
 import com.e.tmdb.networking.MovieApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,29 +25,37 @@ internal class MovieRepositoryImpl(
 
     override suspend fun getPopularMovies(): Flow<List<Movie>> {
         return flow {
-            val popularMovies = movieApi.getPopularMovies().movies
-            emit(popularMovies)
+            val popularMovies = movieApi.getPopularMovies()
+            val popular = mutableListOf<Movie>()
+            popularMovies.movies.forEach { popular.add(it.toMovie(false)) }
+            emit(popular)
         }
     }
 
     override suspend fun getTopRatedMovies(): Flow<List<Movie>> {
         return flow {
-            val popularMovies = movieApi.getTopRatedMovies().movies
-            emit(popularMovies)
+            val topRatedMovies = movieApi.getTopRatedMovies()
+            val top = mutableListOf<Movie>()
+            topRatedMovies.movies.forEach { top.add(it.toMovie(false)) }
+            emit(top)
         }
     }
 
     override suspend fun getUpcomingMovies(): Flow<List<Movie>> {
         return flow {
-            val popularMovies = movieApi.getUpcomingMovies().movies
-            emit(popularMovies)
+            val upcomingMovies = movieApi.getUpcomingMovies()
+            val upcoming = mutableListOf<Movie>()
+            upcomingMovies.movies.forEach { upcoming.add(it.toMovie(false)) }
+            emit(upcoming)
         }
     }
 
     override suspend fun getNowPlayingMovies(): Flow<List<Movie>> {
         return flow {
-            val popularMovies = movieApi.getNowPlayingMovies().movies
-            emit(popularMovies)
+            val nowPlayingMovies = movieApi.getNowPlayingMovies()
+            val nowPlaying = mutableListOf<Movie>()
+            nowPlayingMovies.movies.forEach { nowPlaying.add(it.toMovie(false)) }
+            emit(nowPlaying)
         }
     }
 

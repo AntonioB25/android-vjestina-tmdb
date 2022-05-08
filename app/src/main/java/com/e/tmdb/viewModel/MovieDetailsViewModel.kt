@@ -3,6 +3,7 @@ package com.e.tmdb.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.tmdb.R
+import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movieCredits.CastMember
 import com.e.tmdb.models.movieCredits.CrewMember
 import com.e.tmdb.models.movieCredits.MovieCredits
@@ -38,24 +39,16 @@ class MovieDetailsViewModel(
                 2,
                 "Robert Downey Jr.",
                 "Tony Stark",
-                R.drawable.rdj.toString(),
-                2,
-                3,
-                4,
-                "Acting",
-                true,
-                0,
+                "path"
             )
         ),
         listOf(
             CrewMember(
                 1,
                 "Don Heck",
-                2,
+                "Director",
                 "Director",
                 "Direction",
-                "Direction",
-                "nestonesto.jpg",
             )
         )
     )
@@ -81,5 +74,13 @@ class MovieDetailsViewModel(
             }
         }
         return credits
+    }
+
+    fun getRecommendedMovies(movieId: Int): List<Movie>{
+        viewModelScope.launch {
+            movieDetailsRepository.getMovieRecommendations(movieId).collect {
+
+            }
+        }
     }
 }

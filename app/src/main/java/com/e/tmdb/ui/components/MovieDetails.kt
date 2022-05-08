@@ -58,7 +58,7 @@ fun MovieDetails(
             Social(Modifier.padding(start = 10.dp))
             Spacer(Modifier.padding(10.dp))
 
-            Recommendations()
+            Recommendations(movieDetails, detailsViewModel)
         }
     }
 }
@@ -261,13 +261,10 @@ fun Social(modifier: Modifier) {
 
 
 @Composable
-fun Recommendations() {
-    var reccoms = listOf(
-        Movie(1, "Ironman", R.drawable.ironman),
-        Movie(2, "Godzzila", R.drawable.godzzila),
-        Movie(3, "Puppy Love", R.drawable.puppy_love),
-    )
-
+fun Recommendations(
+    movieDetails: MovieDetails,
+    detailsViewModel: MovieDetailsViewModel
+) {
 
     Column(
         modifier = Modifier
@@ -281,7 +278,7 @@ fun Recommendations() {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(reccoms) { movie ->
+            items(detailsViewModel.getRecommendedMovies(movieDetails.id)) { movie ->
                 RecommendationCard(movie = movie)
             }
         }

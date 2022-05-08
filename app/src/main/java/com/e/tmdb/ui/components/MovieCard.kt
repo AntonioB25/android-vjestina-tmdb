@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.e.tmdb.R
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.viewModel.HomeViewModel
@@ -42,7 +43,7 @@ fun MovieCard(
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = item.imageUrl),
+            painter = rememberAsyncImagePainter(item.posterPath),
             contentDescription = stringResource(R.string.movie_cover),
             alignment = Alignment.Center,
             contentScale = ContentScale.Crop,

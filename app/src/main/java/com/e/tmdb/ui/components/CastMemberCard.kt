@@ -29,7 +29,7 @@ fun CastMemberCard(
     ) {
         Column {
             Image(
-                painter = rememberAsyncImagePainter(member.imageUrl),
+                painter = rememberAsyncImagePainter(member.profilePath),
                 contentDescription = null,
                 alignment = Alignment.Center,
                 contentScale = ContentScale.Crop,

@@ -13,3 +13,17 @@ data class MovieDetails(
     val runtime: Int?,
     val productionCountries: List<ProductionCountry>
 )
+
+fun MovieDetailsResponse.toMovieDetails() = MovieDetails(
+    id,
+    title,
+    backDropPath,
+    posterPath,
+    genres,
+    originalLanguage,
+    originalTitle,
+    overview,
+    releaseDate,
+    runtime,
+    productionCountries
+)
