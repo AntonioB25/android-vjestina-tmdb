@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val httpClientModule = module {
-    single {ApiModule}
+    single { ApiModule }
 }
 
 val movieApiModule = module {
@@ -45,6 +45,6 @@ val movieDetailsViewModelModule = module {
     }
 }
 
-val databaseModule = module{
-    single{FavouritesDatabase(mutableListOf())}
+val databaseModule = module {
+    single { FavouritesDatabase(mutableListOf()) }
 }
