@@ -2,6 +2,7 @@ package com.e.tmdb.respository
 
 import com.e.tmdb.database.FavouritesDatabase
 import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.models.movie.toMovie
 import com.e.tmdb.networking.MovieApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -24,8 +25,9 @@ internal class MovieRepositoryImpl(
 ) : MovieRepository {
 
     override fun getPopularMovies(): Flow<List<Movie>> {
-        return movieApi.getPopularMovies()
-            .map { it.movies }
+        return movieApi.getPopularMovies().map { it ->
+            it.movies.map { it.toMovie(false) }
+        }
     }
 
     override fun getTopRatedMovies(): Flow<List<Movie>> {
