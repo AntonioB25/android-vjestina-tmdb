@@ -1,7 +1,6 @@
 package com.e.tmdb.ui.bottomNav
 
 import MovieCard
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -33,8 +32,6 @@ fun Home(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
-    val movies = homeViewModel.movies.collectAsState()
-    Log.d("testtest", movies.value.toString())
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
