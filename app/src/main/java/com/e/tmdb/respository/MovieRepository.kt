@@ -2,20 +2,20 @@ package com.e.tmdb.respository
 
 import com.e.tmdb.database.FavouritesDatabase
 import com.e.tmdb.models.movie.Movie
-import com.e.tmdb.models.movie.toMovie
 import com.e.tmdb.networking.MovieApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 interface MovieRepository {
-    suspend fun getPopularMovies(): Flow<List<Movie>>
-    suspend fun getTopRatedMovies(): Flow<List<Movie>>
-    suspend fun getUpcomingMovies(): Flow<List<Movie>>
-    suspend fun getNowPlayingMovies(): Flow<List<Movie>>
-    suspend fun getSearchMovie(query: String): Flow<List<Movie>>
+    fun getPopularMovies(): Flow<List<Movie>>
+    fun getTopRatedMovies(): Flow<List<Movie>>
+    fun getUpcomingMovies(): Flow<List<Movie>>
+    fun getNowPlayingMovies(): Flow<List<Movie>>
+    fun getSearchMovie(query: String): Flow<List<Movie>>
     fun addToFavourites(movie: Movie)
     fun removeFromFavourites(movie: Movie)
-    fun getFavouriteMovies(): List<Movie>
+    fun getFavouriteMovies(): Flow<MutableList<Movie>>
 }
 
 internal class MovieRepositoryImpl(
@@ -23,43 +23,30 @@ internal class MovieRepositoryImpl(
     private val favouritesDatabase: FavouritesDatabase
 ) : MovieRepository {
 
-    override suspend fun getPopularMovies(): Flow<List<Movie>> {
-        return flow {
-            val popularMovies = movieApi.getPopularMovies()
-            val popular = mutableListOf<Movie>()
-            popularMovies.movies.forEach { popular.add(it.toMovie(false)) }
-            emit(popular)
+    override fun getPopularMovies(): Flow<List<Movie>> {
+        return movieApi.getPopularMovies()
+            .map { it.movies }
+    }
+
+    override fun getTopRatedMovies(): Flow<List<Movie>> {
+        return movieApi.getTopRatedMovies().map {
+            it.movies
         }
     }
 
-    override suspend fun getTopRatedMovies(): Flow<List<Movie>> {
-        return flow {
-            val topRatedMovies = movieApi.getTopRatedMovies()
-            val top = mutableListOf<Movie>()
-            topRatedMovies.movies.forEach { top.add(it.toMovie(false)) }
-            emit(top)
+    override fun getUpcomingMovies(): Flow<List<Movie>> {
+        return movieApi.getUpcomingMovies().map {
+            it.movies
         }
     }
 
-    override suspend fun getUpcomingMovies(): Flow<List<Movie>> {
-        return flow {
-            val upcomingMovies = movieApi.getUpcomingMovies()
-            val upcoming = mutableListOf<Movie>()
-            upcomingMovies.movies.forEach { upcoming.add(it.toMovie(false)) }
-            emit(upcoming)
+    override fun getNowPlayingMovies(): Flow<List<Movie>> {
+        return movieApi.getNowPlayingMovies().map {
+            it.movies
         }
     }
 
-    override suspend fun getNowPlayingMovies(): Flow<List<Movie>> {
-        return flow {
-            val nowPlayingMovies = movieApi.getNowPlayingMovies()
-            val nowPlaying = mutableListOf<Movie>()
-            nowPlayingMovies.movies.forEach { nowPlaying.add(it.toMovie(false)) }
-            emit(nowPlaying)
-        }
-    }
-
-    override suspend fun getSearchMovie(query: String): Flow<List<Movie>> {
+    override fun getSearchMovie(query: String): Flow<List<Movie>> {
         TODO("Not yet implemented")
     }
 
@@ -71,7 +58,7 @@ internal class MovieRepositoryImpl(
         favouritesDatabase.favouriteMovies.remove(movie)
     }
 
-    override fun getFavouriteMovies(): List<Movie> {
-        return favouritesDatabase.favouriteMovies
+    override fun getFavouriteMovies(): Flow<MutableList<Movie>> {
+        return flowOf(favouritesDatabase.favouriteMovies)
     }
 }

@@ -79,7 +79,7 @@ fun FavouriteButton(
     ) {
         Icon(
             tint = color,
-            imageVector = if (isFavorite) {
+            imageVector = if (movie.isFavorite) {
                 Icons.Filled.Favorite
             } else {
                 Icons.Default.FavoriteBorder

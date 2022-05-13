@@ -41,7 +41,7 @@ fun PopularList(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 elevation = null,
                 onClick = {
-                    movies = homeViewModel.getPopularMovies()
+                    movies = homeViewModel.getPopularMovies().value
                 },
             ) {
                 Text(text = "Popular", style = MaterialTheme.typography.h2)
@@ -50,7 +50,7 @@ fun PopularList(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 elevation = null,
                 onClick = {
-                    movies = homeViewModel.getTopRatedMovies()
+                    movies = homeViewModel.getTopRatedMovies().value
                 }
             ) {
                 Text(text = "Top rated", style = MaterialTheme.typography.h2)

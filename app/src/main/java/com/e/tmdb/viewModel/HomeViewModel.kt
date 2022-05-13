@@ -4,66 +4,62 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.respository.MovieRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-
-//TODO: fix
 
 class HomeViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-
-    fun getPopularMovies(): List<Movie> {
-        var movies: List<Movie> = emptyList()
+    fun getPopularMovies(): MutableStateFlow<List<Movie>> {
+        val movies = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
-            movies = movieRepository.getPopularMovies().flattenToList()
+            movieRepository.getPopularMovies().collect { movies.emit(it) }
         }
         return movies
     }
 
-    fun getTopRatedMovies(): List<Movie> {
-        var movies: List<Movie> = emptyList()
+    fun getTopRatedMovies(): MutableStateFlow<List<Movie>> {
+        val movies = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
-            movies = movieRepository.getTopRatedMovies().flattenToList()
+            movieRepository.getTopRatedMovies().collect { movies.emit(it) }
         }
         return movies
     }
 
-    fun getNowPlayingMovies(): List<Movie> {
-        var movies: List<Movie> = emptyList()
+    fun getNowPlayingMovies(): MutableStateFlow<List<Movie>> {
+        val movies = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
-            movies = movieRepository.getNowPlayingMovies().flattenToList()
+            movieRepository.getNowPlayingMovies().collect { movies.emit(it) }
         }
         return movies
     }
 
-    fun getUpcomingMovies(): List<Movie> {
-        var movies: List<Movie> = emptyList()
+    fun getUpcomingMovies(): MutableStateFlow<List<Movie>> {
+        val movies = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
-            movies = movieRepository.getUpcomingMovies().flattenToList()
+            movieRepository.getUpcomingMovies().collect { movies.emit(it) }
         }
         return movies
     }
 
-    fun addToFavourites(movie: Movie){
+    // TODO: fix
+    // This does not refresh favourites screen when I "unfavourite" movie. I need to leave screen and come back...
+
+    fun addToFavourites(movie: Movie) {
         movieRepository.addToFavourites(movie)
     }
 
-    fun removeFromFavourites(movie: Movie){
+    fun removeFromFavourites(movie: Movie) {
         movieRepository.removeFromFavourites(movie)
     }
 
-    fun getFavouriteMovies(): List<Movie>{
-        return movieRepository.getFavouriteMovies()
+    fun getFavouriteMovies(): MutableStateFlow<List<Movie>> {
+        val favourites = MutableStateFlow<List<Movie>>(emptyList())
+        viewModelScope.launch {
+            movieRepository.getFavouriteMovies().collect { favourites.emit(it) }
+        }
+        return favourites
     }
-
-
-    private suspend fun <T> Flow<List<T>>.flattenToList() =
-        flatMapConcat { it.asFlow() }.toList()
-
 }

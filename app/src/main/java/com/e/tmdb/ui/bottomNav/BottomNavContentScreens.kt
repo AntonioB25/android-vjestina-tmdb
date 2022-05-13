@@ -1,6 +1,7 @@
 package com.e.tmdb.ui.bottomNav
 
 import MovieCard
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -12,6 +13,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,19 +42,19 @@ fun Home(
         )
 
         PopularList(
-            movieList = homeViewModel.getPopularMovies(),
+            movieList = homeViewModel.getPopularMovies().collectAsState().value,
             navigateToDetails = navigateToDetails
         )
 
         MovieCategory(
             categoryTitle = stringResource(id = R.string.category_now_playing),
-            movieList = homeViewModel.getNowPlayingMovies(),
+            movieList = homeViewModel.getNowPlayingMovies().collectAsState().value,
             navigateToDetails = navigateToDetails
         )
 
         MovieCategory(
             categoryTitle = stringResource(id = R.string.category_upcoming),
-            movieList = homeViewModel.getUpcomingMovies(),
+            movieList = homeViewModel.getUpcomingMovies().collectAsState().value,
             navigateToDetails = navigateToDetails
         )
 
@@ -75,12 +77,13 @@ fun MovieCategory(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun FavouritesScreen(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
+    val favouriteMovies = homeViewModel.getFavouriteMovies().collectAsState().value
 
     Column(
         modifier = Modifier
@@ -97,7 +100,7 @@ fun FavouritesScreen(
             cells = GridCells.Fixed(2),
             contentPadding = PaddingValues(3.dp)
         ) {
-            items(homeViewModel.getFavouriteMovies()) { movie ->
+            items(favouriteMovies) { movie ->
                 MovieCard(
                     item = movie,
                     modifier = Modifier

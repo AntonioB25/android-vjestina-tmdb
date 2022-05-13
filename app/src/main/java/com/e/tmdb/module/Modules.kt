@@ -2,7 +2,6 @@ package com.e.tmdb.module
 
 
 import com.e.tmdb.database.FavouritesDatabase
-import com.e.tmdb.networking.ApiModule
 import com.e.tmdb.networking.MovieApi
 import com.e.tmdb.networking.MovieApiImpl
 import com.e.tmdb.respository.MovieDetailsRepository
@@ -14,13 +13,9 @@ import com.e.tmdb.viewModel.MovieDetailsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val httpClientModule = module {
-    single { ApiModule }
-}
-
 val movieApiModule = module {
-    single { MovieApiImpl(get()) }
-    single<MovieApi> { MovieApiImpl(get()) }
+    single { MovieApiImpl() }
+    single<MovieApi> { MovieApiImpl() }
 }
 
 val movieRepositoryModule = module {

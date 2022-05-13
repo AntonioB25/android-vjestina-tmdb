@@ -41,8 +41,8 @@ fun MovieDetails(
     movieId: Int,
 ) {
     val detailsViewModel = getViewModel<MovieDetailsViewModel>()
-    val movieDetails = detailsViewModel.getMovieDetails(movieId)
-    val movieCredits = detailsViewModel.getMovieCredits(movieId)
+    val movieDetails = detailsViewModel.getMovieDetails(movieId).collectAsState().value
+    val movieCredits = detailsViewModel.getMovieCredits(movieId).collectAsState().value
 
     LazyColumn() {
         item {
