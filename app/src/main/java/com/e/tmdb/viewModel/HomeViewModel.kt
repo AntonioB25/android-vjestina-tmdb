@@ -12,14 +12,6 @@ class HomeViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    val movies = MutableStateFlow<List<Movie>>(emptyList())
-
-    init {
-        viewModelScope.launch {
-            movieRepository.getPopularMovies().collect { movies.emit(it) }
-        }
-    }
-
     fun getPopularMovies(): MutableStateFlow<List<Movie>> {
         val movies = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {

@@ -33,8 +33,6 @@ fun Home(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
-    val movies = homeViewModel.movies.collectAsState()
-    Log.d("testtest", movies.value.toString())
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
