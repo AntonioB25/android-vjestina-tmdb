@@ -12,5 +12,5 @@ data class CastMemberResponse(
     @SerialName("character")
     val characterName: String,
     @SerialName("profile_path")
-    val profilePath: String,
+    val profilePath: String?,
 )

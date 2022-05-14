@@ -1,5 +1,6 @@
 package com.e.tmdb.networking
 
+import android.util.Log
 import com.e.tmdb.models.MovieSearchResponse
 import com.e.tmdb.models.movie.MovieListResponse
 import com.e.tmdb.models.movieCredits.MovieCreditsResponse
@@ -46,7 +47,7 @@ internal class MovieApiImpl(
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse =
         client.get(
-            "${HttpRoutes.BASE_URL}/movie/$movieId?api=${HttpRoutes.API_KEY}"
+            "${HttpRoutes.BASE_URL}/movie/$movieId?api_key=${HttpRoutes.API_KEY}"
         )
 
     override suspend fun getMovieCredits(movieId: Int): MovieCreditsResponse =

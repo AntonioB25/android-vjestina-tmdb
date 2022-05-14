@@ -14,5 +14,5 @@ data class CrewMemberResponse(
     @SerialName("department")
     val department: String,
     @SerialName("profile_path")
-    val profilePath: String,
+    val profilePath: String?,
 )

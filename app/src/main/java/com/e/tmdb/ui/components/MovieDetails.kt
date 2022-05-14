@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.e.tmdb.R
-import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movieCredits.CastMember
 import com.e.tmdb.models.movieCredits.MovieCredits
 import com.e.tmdb.models.movieDetails.MovieDetails
@@ -58,7 +57,7 @@ fun MovieDetails(
             Social(Modifier.padding(start = 10.dp))
             Spacer(Modifier.padding(10.dp))
 
-            Recommendations(movieDetails, detailsViewModel)
+            Recommendations(movieId, detailsViewModel)
         }
     }
 }
@@ -262,12 +261,10 @@ fun Social(modifier: Modifier) {
 
 @Composable
 fun Recommendations(
-    movieDetails: MovieDetails,
+    movieId: Int,
     detailsViewModel: MovieDetailsViewModel
 ) {
-
-    val recommendedMovies = detailsViewModel.getRecommendedMovies(movieDetails.id).collectAsState().value
-
+    val recommendedMovies = detailsViewModel.getRecommendedMovies(movieId).collectAsState()
     Column(
         modifier = Modifier
             .padding(10.dp)
@@ -280,7 +277,7 @@ fun Recommendations(
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(recommendedMovies) { movie ->
+            items(recommendedMovies.value) { movie ->
                 RecommendationCard(movie = movie)
             }
         }

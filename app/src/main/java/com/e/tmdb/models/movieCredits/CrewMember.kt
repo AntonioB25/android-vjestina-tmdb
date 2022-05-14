@@ -5,7 +5,7 @@ data class CrewMember(
     val name: String,
     val job: String,
     val department: String,
-    val profilePath: String,
+    val profilePath: String?,
 )
 
 fun CrewMemberResponse.toCrewMember() = CrewMember(

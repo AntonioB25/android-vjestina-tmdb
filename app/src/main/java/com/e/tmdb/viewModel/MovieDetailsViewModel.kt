@@ -1,5 +1,6 @@
 package com.e.tmdb.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.tmdb.R
@@ -21,8 +22,8 @@ class MovieDetailsViewModel(
     // TODO: fix
     // I was trying to return MutableStateFlow, but I don't know what to provide as default value.
     // Cannot put null
+    private val details = MutableStateFlow<MovieDetails>(getBlankMovieDetails())
     fun getMovieDetails(movieId: Int): MutableStateFlow<MovieDetails> {
-        val details = MutableStateFlow<MovieDetails>(getBlankMovieDetails())
         viewModelScope.launch {
             movieDetailsRepository.getMovieDetails(movieId).collect {
                 details.emit(it)
@@ -34,8 +35,8 @@ class MovieDetailsViewModel(
     // TODO: fix
     // I was trying to return MutableStateFlow, but I don't know what to provide as default value.
     // Cannot put null
+    private val credits = MutableStateFlow<MovieCredits>(getBlankCredits())
     fun getMovieCredits(movieId: Int): MutableStateFlow<MovieCredits> {
-        val credits = MutableStateFlow<MovieCredits>(getBlankCredits())
         viewModelScope.launch {
             movieDetailsRepository.getMovieCredits(movieId).collect {
                 credits.emit(it)
@@ -44,8 +45,8 @@ class MovieDetailsViewModel(
         return credits
     }
 
+    private val recommended = MutableStateFlow<List<Movie>>(emptyList())
     fun getRecommendedMovies(movieId: Int): MutableStateFlow<List<Movie>>{
-        val recommended = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
             movieDetailsRepository.getRecommendedMovies(movieId).collect {
                 recommended.emit(it)

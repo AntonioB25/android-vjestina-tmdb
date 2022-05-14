@@ -62,8 +62,6 @@ fun Home(
             movieList = upcoming.value,
             navigateToDetails = navigateToDetails
         )
-
-        Spacer(modifier = Modifier.padding(24.dp))
     }
 }
 

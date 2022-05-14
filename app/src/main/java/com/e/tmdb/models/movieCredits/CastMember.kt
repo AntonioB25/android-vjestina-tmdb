@@ -4,7 +4,7 @@ data class CastMember(
     val id: Int,
     val name: String,
     val characterName: String,
-    val profilePath: String,
+    val profilePath: String?,
 )
 
 fun CastMemberResponse.toCastMember() = CastMember(

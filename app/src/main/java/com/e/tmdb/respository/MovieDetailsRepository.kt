@@ -1,5 +1,6 @@
 package com.e.tmdb.respository
 
+import android.util.Log
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movie.toMovie
 import com.e.tmdb.models.movieCredits.MovieCredits
