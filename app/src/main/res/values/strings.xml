@@ -13,4 +13,5 @@
     <string name="route_favourites">favourites</string>
     <string name="route_home">home</string>
     <string name="label_overview">Overview</string>
+    <string name="label_recommendtations">Recommendations</string>
 </resources>

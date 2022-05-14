@@ -26,5 +26,5 @@ data class MovieDetailsResponse(
     @SerialName("runtime")
     val runtime: Int?,
     @SerialName("production_countries")
-    val productionCountries: List<ProductionCountry>
+    val productionCountries: List<ProductionCountryResponse>
 )

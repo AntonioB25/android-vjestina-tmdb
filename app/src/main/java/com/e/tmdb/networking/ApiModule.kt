@@ -20,7 +20,9 @@ object ApiModule {
         }
 
         install(JsonFeature) {
-            serializer = KotlinxSerializer(kotlinx.serialization.json.Json)
+            serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+                ignoreUnknownKeys = true
+            })
         }
     }
 }

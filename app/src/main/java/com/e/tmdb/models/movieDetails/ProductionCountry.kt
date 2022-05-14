@@ -1,6 +1,10 @@
 package com.e.tmdb.models.movieDetails
 
 data class ProductionCountry(
-    val iso_3166_1: String,
+    val iso: String,
     val name: String
+)
+
+fun ProductionCountryResponse.toProductionCompany() = ProductionCountry(
+    iso, name
 )

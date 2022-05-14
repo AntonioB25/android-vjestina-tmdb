@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val httpClientModule = module {
-    single { ApiModule }
+    single { ApiModule.httpClient }
 }
 
 val movieApiModule = module {

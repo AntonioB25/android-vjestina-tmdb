@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.e.tmdb.models.movie.Movie
 
 
@@ -27,7 +28,7 @@ fun RecommendationCard(movie: Movie) {
     ) {
         Column() {
             Image(
-                painter = painterResource(id = movie.imageUrl),
+                painter = rememberAsyncImagePainter(movie.posterPath),
                 contentDescription = "Movie cover",
                 alignment = Alignment.Center,
                 contentScale = ContentScale.Crop,

@@ -48,11 +48,15 @@ class HomeViewModel(
     // This does not refresh favourites screen when I "unfavourite" movie. I need to leave screen and come back...
 
     fun addToFavourites(movie: Movie) {
-        movieRepository.addToFavourites(movie)
+        viewModelScope.launch {
+            movieRepository.addToFavourites(movie)
+        }
     }
 
     fun removeFromFavourites(movie: Movie) {
-        movieRepository.removeFromFavourites(movie)
+        viewModelScope.launch {
+            movieRepository.removeFromFavourites(movie)
+        }
     }
 
     fun getFavouriteMovies(): MutableStateFlow<List<Movie>> {

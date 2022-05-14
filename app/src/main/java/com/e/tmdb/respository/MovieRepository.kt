@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 interface MovieRepository {
-    fun getPopularMovies(): Flow<List<Movie>>
-    fun getTopRatedMovies(): Flow<List<Movie>>
-    fun getUpcomingMovies(): Flow<List<Movie>>
-    fun getNowPlayingMovies(): Flow<List<Movie>>
-    fun getSearchMovie(query: String): Flow<List<Movie>>
-    fun addToFavourites(movie: Movie)
-    fun removeFromFavourites(movie: Movie)
-    fun getFavouriteMovies(): Flow<MutableList<Movie>>
+    suspend fun getPopularMovies(): Flow<List<Movie>>
+    suspend fun getTopRatedMovies(): Flow<List<Movie>>
+    suspend fun getUpcomingMovies(): Flow<List<Movie>>
+    suspend fun getNowPlayingMovies(): Flow<List<Movie>>
+    suspend fun getSearchMovie(query: String): Flow<List<Movie>>
+    suspend fun addToFavourites(movie: Movie)
+    suspend fun removeFromFavourites(movie: Movie)
+    suspend fun getFavouriteMovies(): Flow<MutableList<Movie>>
 }
 
 internal class MovieRepositoryImpl(
@@ -24,43 +24,43 @@ internal class MovieRepositoryImpl(
     private val favouritesDatabase: FavouritesDatabase
 ) : MovieRepository {
 
-    override fun getPopularMovies(): Flow<List<Movie>> {
-        return movieApi.getPopularMovies().map { it ->
-            it.movies.map { it.toMovie(false) }
-        }
+    override suspend fun getPopularMovies(): Flow<List<Movie>> {
+        return flowOf(movieApi.getPopularMovies().movies.map {
+            it.toMovie(false)
+        })
     }
 
-    override fun getTopRatedMovies(): Flow<List<Movie>> {
-        return movieApi.getTopRatedMovies().map {
-            it.movies
-        }
+    override suspend fun getTopRatedMovies(): Flow<List<Movie>> {
+        return flowOf(movieApi.getTopRatedMovies().movies.map {
+            it.toMovie(false)
+        })
     }
 
-    override fun getUpcomingMovies(): Flow<List<Movie>> {
-        return movieApi.getUpcomingMovies().map {
-            it.movies
-        }
+    override suspend fun getUpcomingMovies(): Flow<List<Movie>> {
+        return flowOf(movieApi.getUpcomingMovies().movies.map {
+            it.toMovie(false)
+        })
     }
 
-    override fun getNowPlayingMovies(): Flow<List<Movie>> {
-        return movieApi.getNowPlayingMovies().map {
-            it.movies
-        }
+    override suspend fun getNowPlayingMovies(): Flow<List<Movie>> {
+        return flowOf(movieApi.getNowPlayingMovies().movies.map {
+            it.toMovie(false)
+        })
     }
 
-    override fun getSearchMovie(query: String): Flow<List<Movie>> {
+    override suspend fun getSearchMovie(query: String): Flow<List<Movie>> {
         TODO("Not yet implemented")
     }
 
-    override fun addToFavourites(movie: Movie) {
+    override suspend fun addToFavourites(movie: Movie) {
         favouritesDatabase.favouriteMovies.add(movie)
     }
 
-    override fun removeFromFavourites(movie: Movie) {
+    override suspend fun removeFromFavourites(movie: Movie) {
         favouritesDatabase.favouriteMovies.remove(movie)
     }
 
-    override fun getFavouriteMovies(): Flow<MutableList<Movie>> {
+    override suspend fun getFavouriteMovies(): Flow<MutableList<Movie>> {
         return flowOf(favouritesDatabase.favouriteMovies)
     }
 }

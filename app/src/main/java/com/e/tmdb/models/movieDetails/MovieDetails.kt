@@ -25,5 +25,5 @@ fun MovieDetailsResponse.toMovieDetails() = MovieDetails(
     overview,
     releaseDate,
     runtime,
-    productionCountries
+    productionCountries.map { it.toProductionCompany() }
 )

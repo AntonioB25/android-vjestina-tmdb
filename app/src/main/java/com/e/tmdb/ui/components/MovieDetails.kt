@@ -125,7 +125,7 @@ fun ImageAndInfo(
             Spacer(modifier = Modifier.padding(10.dp))
 
             Text(
-                text = movieDetails.releaseDate + " (" + movieDetails.productionCountries[0].iso_3166_1 + ")",
+                text = movieDetails.releaseDate + " (" + movieDetails.productionCountries[0].iso + ")",
                 color = Color.White
             )
             Text(
@@ -266,19 +266,21 @@ fun Recommendations(
     detailsViewModel: MovieDetailsViewModel
 ) {
 
+    val recommendedMovies = detailsViewModel.getRecommendedMovies(movieDetails.id).collectAsState().value
+
     Column(
         modifier = Modifier
             .padding(10.dp)
     ) {
         Text(
-            text = "Recommendations",
+            text = stringResource(R.string.label_recommendtations),
             style = MaterialTheme.typography.h1
         )
         Spacer(modifier = Modifier.padding(10.dp))
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(detailsViewModel.getRecommendedMovies(movieDetails.id)) { movie ->
+            items(recommendedMovies) { movie ->
                 RecommendationCard(movie = movie)
             }
         }

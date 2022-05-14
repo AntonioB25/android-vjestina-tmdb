@@ -3,6 +3,7 @@ package com.e.tmdb.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.e.tmdb.R
+import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movieCredits.CastMember
 import com.e.tmdb.models.movieCredits.CrewMember
 import com.e.tmdb.models.movieCredits.MovieCredits
@@ -43,6 +44,16 @@ class MovieDetailsViewModel(
         return credits
     }
 
+    fun getRecommendedMovies(movieId: Int): MutableStateFlow<List<Movie>>{
+        val recommended = MutableStateFlow<List<Movie>>(emptyList())
+        viewModelScope.launch {
+            movieDetailsRepository.getRecommendedMovies(movieId).collect {
+                recommended.emit(it)
+            }
+        }
+        return recommended
+    }
+
 
     private fun getBlankMovieDetails(): MovieDetails {
         return MovieDetails(
@@ -70,23 +81,15 @@ class MovieDetailsViewModel(
                     "Actor",
                     "character",
                     R.drawable.rdj.toString(),
-                    2,
-                    3,
-                    4,
-                    "depart",
-                    true,
-                    0,
                 )
             ),
             listOf(
                 CrewMember(
                     1,
                     "name",
-                    2,
                     "job",
                     "depart",
-                    "direct",
-                    "nestonesto.jpg",
+                    "progilepath",
                 )
             )
         )

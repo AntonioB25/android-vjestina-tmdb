@@ -33,6 +33,9 @@ fun Home(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
+    val popular = homeViewModel.getPopularMovies().collectAsState()
+    val nowPlaying = homeViewModel.getNowPlayingMovies().collectAsState()
+    val upcoming = homeViewModel.getUpcomingMovies().collectAsState()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
@@ -42,19 +45,19 @@ fun Home(
         )
 
         PopularList(
-            movieList = homeViewModel.getPopularMovies().collectAsState().value,
+            movieList = popular.value,
             navigateToDetails = navigateToDetails
         )
 
         MovieCategory(
             categoryTitle = stringResource(id = R.string.category_now_playing),
-            movieList = homeViewModel.getNowPlayingMovies().collectAsState().value,
+            movieList = nowPlaying.value,
             navigateToDetails = navigateToDetails
         )
 
         MovieCategory(
             categoryTitle = stringResource(id = R.string.category_upcoming),
-            movieList = homeViewModel.getUpcomingMovies().collectAsState().value,
+            movieList = upcoming.value,
             navigateToDetails = navigateToDetails
         )
 
@@ -83,7 +86,7 @@ fun FavouritesScreen(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
-    val favouriteMovies = homeViewModel.getFavouriteMovies().collectAsState().value
+    val favouriteMovies = homeViewModel.getFavouriteMovies().collectAsState()
 
     Column(
         modifier = Modifier
@@ -100,7 +103,7 @@ fun FavouritesScreen(
             cells = GridCells.Fixed(2),
             contentPadding = PaddingValues(3.dp)
         ) {
-            items(favouriteMovies) { movie ->
+            items(favouriteMovies.value) { movie ->
                 MovieCard(
                     item = movie,
                     modifier = Modifier

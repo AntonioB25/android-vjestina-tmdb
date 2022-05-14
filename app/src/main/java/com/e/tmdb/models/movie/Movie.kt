@@ -8,7 +8,7 @@ data class Movie(
     var isFavorite: Boolean
 )
 
-const val BASE_IMAGE_URL = "https://image.tmbd.org/t/p/w500"
+const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500/"
 
 fun MovieResponse.toMovie(isFavorite: Boolean) = Movie(
     id,
