@@ -53,11 +53,15 @@ internal class MovieRepositoryImpl(
     }
 
     override suspend fun addToFavourites(movie: Movie) {
-        favouritesDatabase.favouriteMovies.add(movie)
+        val newList = favouritesDatabase.favouriteMovies
+        newList.add(movie)
+        favouritesDatabase.favouriteMovies = newList
     }
 
     override suspend fun removeFromFavourites(movie: Movie) {
-        favouritesDatabase.favouriteMovies.remove(movie)
+        val newList = favouritesDatabase.favouriteMovies
+        newList.remove(movie)
+        favouritesDatabase.favouriteMovies = newList
     }
 
     override suspend fun getFavouriteMovies(): Flow<MutableList<Movie>> {

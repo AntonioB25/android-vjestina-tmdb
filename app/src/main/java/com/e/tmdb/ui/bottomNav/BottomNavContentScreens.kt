@@ -24,6 +24,8 @@ import com.e.tmdb.ui.components.MovieList
 import com.e.tmdb.ui.components.PopularList
 import com.e.tmdb.ui.components.SearchBar
 import com.e.tmdb.viewModel.HomeViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.getViewModel
 
 

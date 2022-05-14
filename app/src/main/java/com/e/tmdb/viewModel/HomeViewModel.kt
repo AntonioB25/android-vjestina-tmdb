@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.respository.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
 class HomeViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
+
 
     fun getPopularMovies(): MutableStateFlow<List<Movie>> {
         val movies = MutableStateFlow<List<Movie>>(emptyList())
@@ -47,20 +49,26 @@ class HomeViewModel(
     // TODO: fix
     // This does not refresh favourites screen when I "unfavourite" movie. I need to leave screen and come back...
 
+
+    private val favourites = MutableStateFlow<List<Movie>>(emptyList())
+
     fun addToFavourites(movie: Movie) {
         viewModelScope.launch {
             movieRepository.addToFavourites(movie)
+            val list = movieRepository.getFavouriteMovies().collect{ }
         }
     }
 
     fun removeFromFavourites(movie: Movie) {
+        val list = getFavouriteMovies().value.toMutableList()
+        list.remove(movie)
+        getFavouriteMovies().value = list
         viewModelScope.launch {
             movieRepository.removeFromFavourites(movie)
         }
     }
 
     fun getFavouriteMovies(): MutableStateFlow<List<Movie>> {
-        val favourites = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
             movieRepository.getFavouriteMovies().collect { favourites.emit(it) }
         }
