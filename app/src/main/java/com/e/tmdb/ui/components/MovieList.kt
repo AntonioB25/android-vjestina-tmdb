@@ -8,12 +8,12 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.e.tmdb.models.MovieItem
+import com.e.tmdb.models.movie.Movie
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieList(
-    list: List<MovieItem>,
+    list: List<Movie>,
     navigateToDetails: (Int) -> Unit
 ) {
     LazyRow(

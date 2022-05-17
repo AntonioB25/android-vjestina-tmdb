@@ -8,50 +8,26 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.e.tmdb.R
-import com.e.tmdb.models.MovieItem
+import com.e.tmdb.models.movie.Movie
+import com.e.tmdb.viewModel.HomeViewModel
+import org.koin.androidx.compose.getViewModel
 
 /**
  * Shows list of popular movies
- * Uses BaseMovieList to show MovieCards
+ * Uses MovieList to show MovieCards
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PopularList(
-    movieList: MutableList<MovieItem>,
-    navigateToDetails: (Int) -> Unit
+    movieList: List<Movie>,
+    navigateToDetails: (Int) -> Unit,
 ) {
+    val homeViewModel = getViewModel<HomeViewModel>()
     var movies by remember {
         mutableStateOf(
-            listOf(
-                MovieItem(1, "Ironman", R.drawable.ironman),
-                MovieItem(2, "Godzzila", R.drawable.godzzila),
-                MovieItem(1, "Ironman", R.drawable.ironman),
-                MovieItem(2, "Godzzila", R.drawable.godzzila),
-                MovieItem(1, "Ironman", R.drawable.ironman),
-                MovieItem(2, "Godzzila", R.drawable.godzzila),
-                MovieItem(3, "Puppy Love", R.drawable.puppy_love)
-            )
+            movieList
         )
     }
-    var popularList = mutableListOf<MovieItem>(
-        MovieItem(1, "Ironman", R.drawable.ironman),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(1, "Ironman", R.drawable.ironman),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(1, "Ironman", R.drawable.ironman),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love)
-    )
-
-    var topRatedList = mutableListOf<MovieItem>(
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-        MovieItem(3, "Puppy Love", R.drawable.puppy_love),
-        MovieItem(2, "Godzzila", R.drawable.godzzila),
-    )
 
     Column {
 
@@ -65,7 +41,7 @@ fun PopularList(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 elevation = null,
                 onClick = {
-                    movies = popularList
+                    movies = homeViewModel.getPopularMovies().value
                 },
             ) {
                 Text(text = "Popular", style = MaterialTheme.typography.h2)
@@ -74,7 +50,7 @@ fun PopularList(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 elevation = null,
                 onClick = {
-                    movies = topRatedList
+                    movies = homeViewModel.getTopRatedMovies().value
                 }
             ) {
                 Text(text = "Top rated", style = MaterialTheme.typography.h2)
