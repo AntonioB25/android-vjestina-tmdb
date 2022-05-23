@@ -15,10 +15,9 @@ class MyApp : Application() {
                 listOf(
                     viewModelsModule,
                     movieApiModule,
-                    movieRepositoryModule,
-                    movieDetailsRepositoryModule,
+                    repositoryModules,
                     databaseModule,
-                    httpClientModule
+                    httpClientModule,
                 )
             )
         }

@@ -1,5 +1,8 @@
 package com.e.tmdb.models.movie
 
+import com.e.tmdb.database.entity.DbMovieTuple
+import com.e.tmdb.networking.HttpRoutes
+
 data class Movie(
     val id: Int,
     val title: String,
@@ -8,12 +11,18 @@ data class Movie(
     var isFavorite: Boolean
 )
 
-const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500/"
-
 fun MovieResponse.toMovie(isFavorite: Boolean) = Movie(
     id,
     title,
     overview,
-    posterPath.let { "$BASE_IMAGE_URL/$it" },
+    posterPath.let { "${HttpRoutes.BASE_IMAGE_URL}$it" },
+    isFavorite
+)
+
+fun DbMovieTuple.toMovie() = Movie(
+    id,
+    title,
+    overview,
+    posterPath,
     isFavorite
 )

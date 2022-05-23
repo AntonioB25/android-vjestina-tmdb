@@ -22,7 +22,11 @@ fun PopularList(
     movieList: List<Movie>,
     navigateToDetails: (Int) -> Unit,
 ) {
+
     val homeViewModel = getViewModel<HomeViewModel>()
+
+    // this doesn't show popular movies when I open app, I need to click button for it to show
+    // any idea why?
     var movies by remember {
         mutableStateOf(
             movieList
@@ -41,7 +45,7 @@ fun PopularList(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 elevation = null,
                 onClick = {
-                    movies = homeViewModel.getPopularMovies().value
+                    movies = homeViewModel.popular.value
                 },
             ) {
                 Text(text = "Popular", style = MaterialTheme.typography.h2)
@@ -50,7 +54,7 @@ fun PopularList(
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
                 elevation = null,
                 onClick = {
-                    movies = homeViewModel.getTopRatedMovies().value
+                    movies = homeViewModel.topRated.value
                 }
             ) {
                 Text(text = "Top rated", style = MaterialTheme.typography.h2)

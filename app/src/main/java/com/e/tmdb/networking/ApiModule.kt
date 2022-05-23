@@ -7,6 +7,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 
+
 object ApiModule {
 
     val httpClient: HttpClient = HttpClient(Android) {
@@ -25,4 +26,6 @@ object ApiModule {
             })
         }
     }
+
+
 }

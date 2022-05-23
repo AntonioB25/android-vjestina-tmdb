@@ -26,6 +26,7 @@ class MovieDetailsViewModel(
         return details
     }
 
+
     fun getMovieCredits(movieId: Int): MutableStateFlow<MovieCredits?> {
         viewModelScope.launch {
             movieDetailsRepository.fetchMovieCredits(movieId).collect {
@@ -34,6 +35,7 @@ class MovieDetailsViewModel(
         }
         return credits
     }
+
 
     fun getRecommendedMovies(movieId: Int): MutableStateFlow<List<Movie>> {
         viewModelScope.launch {

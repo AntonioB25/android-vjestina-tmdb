@@ -7,4 +7,5 @@ object HttpRoutes {
     const val NOW_PLAYING_MOVIES = "${BASE_URL}/movie/now_playing"
     const val UPCOMING_MOVIES = "${BASE_URL}/movie/upcoming"
     const val TOP_RATED_MOVIES = "${BASE_URL}/movie/top_rated"
+    const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 }
