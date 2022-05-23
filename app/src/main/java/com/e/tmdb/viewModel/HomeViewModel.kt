@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
+
     private val popular = MutableStateFlow<List<Movie>>(emptyList())
     private val upcoming = MutableStateFlow<List<Movie>>(emptyList())
     private val topRated = MutableStateFlow<List<Movie>>(emptyList())
@@ -18,28 +19,28 @@ class HomeViewModel(
 
     fun getPopularMovies(): MutableStateFlow<List<Movie>> {
         viewModelScope.launch {
-            movieRepository.getPopularMovies().collect { popular.emit(it) }
+            movieRepository.fetchPopularMovies().collect { popular.emit(it) }
         }
         return popular
     }
 
     fun getTopRatedMovies(): MutableStateFlow<List<Movie>> {
         viewModelScope.launch {
-            movieRepository.getTopRatedMovies().collect { topRated.emit(it) }
+            movieRepository.fetchTopRatedMovies().collect { topRated.emit(it) }
         }
         return topRated
     }
 
     fun getNowPlayingMovies(): MutableStateFlow<List<Movie>> {
         viewModelScope.launch {
-            movieRepository.getNowPlayingMovies().collect { nowPlaying.emit(it) }
+            movieRepository.fetchNowPlayingMovies().collect { nowPlaying.emit(it) }
         }
         return nowPlaying
     }
 
     fun getUpcomingMovies(): MutableStateFlow<List<Movie>> {
         viewModelScope.launch {
-            movieRepository.getUpcomingMovies().collect { upcoming.emit(it) }
+            movieRepository.fetchUpcomingMovies().collect { upcoming.emit(it) }
         }
         return upcoming
     }
@@ -62,7 +63,7 @@ class HomeViewModel(
     fun getFavouriteMovies(): MutableStateFlow<List<Movie>> {
         val favourites = MutableStateFlow<List<Movie>>(emptyList())
         viewModelScope.launch {
-            movieRepository.getFavouriteMovies().collect { favourites.emit(it) }
+            movieRepository.fetchFavouriteMovies().collect { favourites.emit(it) }
         }
         return favourites
     }

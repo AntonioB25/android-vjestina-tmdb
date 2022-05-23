@@ -1,6 +1,5 @@
 package com.e.tmdb.respository
 
-import android.util.Log
 import com.e.tmdb.models.movie.Movie
 import com.e.tmdb.models.movie.toMovie
 import com.e.tmdb.models.movieCredits.MovieCredits
@@ -9,27 +8,32 @@ import com.e.tmdb.models.movieDetails.MovieDetails
 import com.e.tmdb.models.movieDetails.toMovieDetails
 import com.e.tmdb.networking.MovieApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flow
 
 interface MovieDetailsRepository {
-    suspend fun getMovieDetails(movieId: Int): Flow<MovieDetails>
-    suspend fun getMovieCredits(movieId: Int): Flow<MovieCredits>
-    suspend fun getRecommendedMovies(movieId: Int): Flow<List<Movie>>
+    fun fetchMovieDetails(movieId: Int): Flow<MovieDetails>
+    fun fetchMovieCredits(movieId: Int): Flow<MovieCredits>
+    fun fetchRecommendedMovies(movieId: Int): Flow<List<Movie>>
 }
 
 internal class MovieDetailsRepositoryImpl(
     private val movieApi: MovieApi
 ) : MovieDetailsRepository {
-    override suspend fun getMovieDetails(movieId: Int): Flow<MovieDetails> {
-        return flowOf(movieApi.getMovieDetails(movieId).toMovieDetails())
-    }
+    override fun fetchMovieDetails(movieId: Int): Flow<MovieDetails> =
+        flow {
+            emit(movieApi.fetchMovieDetails(movieId).toMovieDetails())
+        }
 
-    override suspend fun getMovieCredits(movieId: Int): Flow<MovieCredits> {
-        return flowOf(movieApi.getMovieCredits(movieId).toMovieCredits())
-    }
 
-    override suspend fun getRecommendedMovies(movieId: Int): Flow<List<Movie>> {
-        return flowOf(movieApi.getRecommendedMovies(movieId).movies.map { it.toMovie(false) })
-    }
+    override fun fetchMovieCredits(movieId: Int): Flow<MovieCredits> =
+        flow {
+            emit(movieApi.fetchMovieCredits(movieId).toMovieCredits())
+        }
+
+
+    override fun fetchRecommendedMovies(movieId: Int): Flow<List<Movie>> =
+        flow {
+            emit(movieApi.fetchRecommendedMovies(movieId).movies.map { it.toMovie(false) })
+        }
+
 }

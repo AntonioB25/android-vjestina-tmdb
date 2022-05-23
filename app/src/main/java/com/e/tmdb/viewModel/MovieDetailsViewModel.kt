@@ -1,16 +1,10 @@
 package com.e.tmdb.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.e.tmdb.R
 import com.e.tmdb.models.movie.Movie
-import com.e.tmdb.models.movieCredits.CastMember
-import com.e.tmdb.models.movieCredits.CrewMember
 import com.e.tmdb.models.movieCredits.MovieCredits
 import com.e.tmdb.models.movieDetails.MovieDetails
-import com.e.tmdb.models.movieDetails.MovieGenre
-import com.e.tmdb.models.movieDetails.ProductionCountry
 import com.e.tmdb.respository.MovieDetailsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -19,80 +13,34 @@ class MovieDetailsViewModel(
     private val movieDetailsRepository: MovieDetailsRepository
 ) : ViewModel() {
 
-    // TODO: fix
-    // I was trying to return MutableStateFlow, but I don't know what to provide as default value.
-    // Cannot put null
-    private val details = MutableStateFlow<MovieDetails>(getBlankMovieDetails())
-    fun getMovieDetails(movieId: Int): MutableStateFlow<MovieDetails> {
+    private val details = MutableStateFlow<MovieDetails?>(null)
+    private val credits = MutableStateFlow<MovieCredits?>(null)
+    private val recommended = MutableStateFlow<List<Movie>>(emptyList())
+
+    fun getMovieDetails(movieId: Int): MutableStateFlow<MovieDetails?> {
         viewModelScope.launch {
-            movieDetailsRepository.getMovieDetails(movieId).collect {
+            movieDetailsRepository.fetchMovieDetails(movieId).collect {
                 details.emit(it)
             }
         }
         return details
     }
 
-    // TODO: fix
-    // I was trying to return MutableStateFlow, but I don't know what to provide as default value.
-    // Cannot put null
-    private val credits = MutableStateFlow<MovieCredits>(getBlankCredits())
-    fun getMovieCredits(movieId: Int): MutableStateFlow<MovieCredits> {
+    fun getMovieCredits(movieId: Int): MutableStateFlow<MovieCredits?> {
         viewModelScope.launch {
-            movieDetailsRepository.getMovieCredits(movieId).collect {
+            movieDetailsRepository.fetchMovieCredits(movieId).collect {
                 credits.emit(it)
             }
         }
         return credits
     }
 
-    private val recommended = MutableStateFlow<List<Movie>>(emptyList())
-    fun getRecommendedMovies(movieId: Int): MutableStateFlow<List<Movie>>{
+    fun getRecommendedMovies(movieId: Int): MutableStateFlow<List<Movie>> {
         viewModelScope.launch {
-            movieDetailsRepository.getRecommendedMovies(movieId).collect {
+            movieDetailsRepository.fetchRecommendedMovies(movieId).collect {
                 recommended.emit(it)
             }
         }
         return recommended
-    }
-
-
-    private fun getBlankMovieDetails(): MovieDetails {
-        return MovieDetails(
-            0,
-            "No Title",
-            "picture",
-            "psoter",
-            listOf(MovieGenre(1, "genre")),
-            "Original lang",
-            "Title",
-            "OV",
-            "date",
-            0,
-            listOf(ProductionCountry("test", "name")),
-        )
-    }
-
-
-    private fun getBlankCredits(): MovieCredits {
-        return MovieCredits(
-            3,
-            listOf(
-                CastMember(
-                    2,
-                    "Actor",
-                    "character",
-                    R.drawable.rdj.toString(),
-                )
-            ),
-            listOf(
-                CrewMember(
-                    1,
-                    "name",
-                    "job",
-                    "depart",
-                    "progilepath",
-                )
-            )
-        )
     }
 }

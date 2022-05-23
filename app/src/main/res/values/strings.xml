@@ -14,4 +14,5 @@
     <string name="route_home">home</string>
     <string name="label_overview">Overview</string>
     <string name="label_recommendtations">Recommendations</string>
+    <string name="error_message_details">Could not get movie details</string>
 </resources>

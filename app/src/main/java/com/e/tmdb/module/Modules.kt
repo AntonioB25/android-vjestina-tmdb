@@ -1,6 +1,5 @@
 package com.e.tmdb.module
 
-
 import com.e.tmdb.database.FavouritesDatabase
 import com.e.tmdb.networking.ApiModule
 import com.e.tmdb.networking.MovieApi
@@ -33,13 +32,11 @@ val movieDetailsRepositoryModule = module {
     single<MovieDetailsRepository> { MovieDetailsRepositoryImpl(get()) }
 }
 
-val homeViewModelModule = module {
+val viewModelsModule = module {
     viewModel {
         HomeViewModel(get())
     }
-}
 
-val movieDetailsViewModelModule = module {
     viewModel {
         MovieDetailsViewModel(get())
     }

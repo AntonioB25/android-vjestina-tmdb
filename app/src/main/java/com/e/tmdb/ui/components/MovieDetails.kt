@@ -45,19 +45,23 @@ fun MovieDetails(
 
     LazyColumn() {
         item {
-            ImageAndInfo(movieDetails)
-            Spacer(Modifier.padding(10.dp))
+            if(movieDetails != null && movieCredits != null){
+                ImageAndInfo(movieDetails)
+                Spacer(Modifier.padding(10.dp))
 
-            Overview(Modifier.padding(start = 10.dp), movieDetails, movieCredits)
-            Spacer(Modifier.padding(10.dp))
+                Overview(Modifier.padding(start = 10.dp), movieDetails, movieCredits)
+                Spacer(Modifier.padding(10.dp))
 
-            Cast(Modifier.padding(start = 10.dp), movieCredits)
-            Spacer(Modifier.padding(10.dp))
+                Cast(Modifier.padding(start = 10.dp), movieCredits)
+                Spacer(Modifier.padding(10.dp))
 
-            Social(Modifier.padding(start = 10.dp))
-            Spacer(Modifier.padding(10.dp))
+                Social(Modifier.padding(start = 10.dp))
+                Spacer(Modifier.padding(10.dp))
 
-            Recommendations(movieId, detailsViewModel)
+                Recommendations(movieId, detailsViewModel)
+            }else{
+                Text(text = stringResource(R.string.error_message_details))
+            }
         }
     }
 }

@@ -13,10 +13,9 @@ class MyApp : Application() {
             androidContext(this@MyApp)
             modules(
                 listOf(
-                    homeViewModelModule,
+                    viewModelsModule,
                     movieApiModule,
                     movieRepositoryModule,
-                    movieDetailsViewModelModule,
                     movieDetailsRepositoryModule,
                     databaseModule,
                     httpClientModule

@@ -1,4 +1,3 @@
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -61,7 +59,7 @@ fun FavouriteButton(
     color: Color = Color.White,
     movie: Movie
 ) {
-    var isFavorite by remember { mutableStateOf(movie.isFavorite)}
+    var isFavorite by remember { mutableStateOf(movie.isFavorite) }
     val homeViewModel = getViewModel<HomeViewModel>()
 
     IconToggleButton(
@@ -69,9 +67,9 @@ fun FavouriteButton(
         onCheckedChange = {
             isFavorite = !isFavorite
             movie.isFavorite = isFavorite
-            if(isFavorite){
+            if (isFavorite) {
                 homeViewModel.addToFavourites(movie)
-            }else{
+            } else {
                 homeViewModel.removeFromFavourites(movie)
             }
         },
