@@ -22,12 +22,10 @@ val movieApiModule = module {
     single<MovieApi> { MovieApiImpl(get()) }
 }
 
-val movieRepositoryModule = module {
+val repositoryModules = module {
     single { MovieRepositoryImpl(get(), get()) }
     single<MovieRepository> { MovieRepositoryImpl(get(), get()) }
-}
 
-val movieDetailsRepositoryModule = module {
     single { MovieDetailsRepositoryImpl(get()) }
     single<MovieDetailsRepository> { MovieDetailsRepositoryImpl(get()) }
 }
