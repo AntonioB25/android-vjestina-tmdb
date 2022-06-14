@@ -31,6 +31,7 @@ val repositoryModules = module {
 
     single { MovieDetailsRepositoryImpl(get(), get()) }
     single<MovieDetailsRepository> { MovieDetailsRepositoryImpl(get(), get()) }
+
 }
 
 val viewModelsModule = module {
