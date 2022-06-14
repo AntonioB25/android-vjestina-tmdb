@@ -20,9 +20,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     navigateToDetails = ::navigateToDetails,
                 )
-
             }
         }
     }
-
 }

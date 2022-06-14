@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.0'
 }
-
+apply plugin: 'kotlin-kapt'
 android {
     compileSdk 32
 
@@ -78,5 +78,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$roomVersion"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$roomVersion"
+
 
 }

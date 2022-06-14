@@ -65,13 +65,19 @@ fun FavouriteButton(
     IconToggleButton(
         checked = isFavorite,
         onCheckedChange = {
-            isFavorite = !isFavorite
-            movie.isFavorite = isFavorite
-            if (isFavorite) {
-                homeViewModel.addToFavourites(movie)
+            if (!isFavorite) {
+                homeViewModel.addMovieToFavourites(movie.id)
             } else {
-                homeViewModel.removeFromFavourites(movie)
+                homeViewModel.removeMovieFromFavourite(movie.id)
             }
+
+            isFavorite = !isFavorite
+//            movie.isFavorite = isFavorite
+//            if (isFavorite) {
+//                homeViewModel.addToFavourites(movie)
+//            } else {
+//                homeViewModel.removeFromFavourites(movie)
+//            }
         },
         modifier = modifier
             .clip(CircleShape)

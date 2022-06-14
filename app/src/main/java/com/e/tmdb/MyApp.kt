@@ -17,7 +17,7 @@ class MyApp : Application() {
                     movieApiModule,
                     repositoryModules,
                     databaseModule,
-                    httpClientModule
+                    httpClientModule,
                 )
             )
         }

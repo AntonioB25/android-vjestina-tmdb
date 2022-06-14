@@ -1,5 +1,7 @@
 package com.e.tmdb.models.movieCredits
 
+import com.e.tmdb.database.entity.DbCrewMember
+
 data class CrewMember(
     val id: Int,
     val name: String,
@@ -14,4 +16,11 @@ fun CrewMemberResponse.toCrewMember() = CrewMember(
     job,
     department,
     profilePath
+)
+
+fun CrewMember.toDbCrewMember() = DbCrewMember(
+    id,
+    name,
+    job,
+    department,
 )

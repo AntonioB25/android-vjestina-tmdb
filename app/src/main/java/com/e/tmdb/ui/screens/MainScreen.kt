@@ -40,7 +40,7 @@ fun MainNavigationGraph(
             "details/{movieId}",
             arguments = listOf(navArgument("movieId") { type = NavType.IntType })
         ) { navBackStackEntry ->
-            DetailsScreen(movieId = navBackStackEntry.arguments?.getInt("movieId")!!)       // is this good?
+            DetailsScreen(movieId = navBackStackEntry.arguments?.getInt("movieId")!!)
         }
     }
 }

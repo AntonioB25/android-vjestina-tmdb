@@ -32,9 +32,9 @@ fun Home(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
-    val popular = homeViewModel.getPopularMovies().collectAsState()
-    val nowPlaying = homeViewModel.getNowPlayingMovies().collectAsState()
-    val upcoming = homeViewModel.getUpcomingMovies().collectAsState()
+    val popular = homeViewModel.popular.collectAsState()
+    val nowPlaying = homeViewModel.nowPlaying.collectAsState()
+    val upcoming = homeViewModel.upcoming.collectAsState()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState())
@@ -83,7 +83,7 @@ fun FavouritesScreen(
     navigateToDetails: (Int) -> Unit,
 ) {
     val homeViewModel = getViewModel<HomeViewModel>()
-    val favouriteMovies = homeViewModel.getFavouriteMovies().collectAsState()
+    val favouriteMovies = homeViewModel.favourites.collectAsState()
 
     Column(
         modifier = Modifier

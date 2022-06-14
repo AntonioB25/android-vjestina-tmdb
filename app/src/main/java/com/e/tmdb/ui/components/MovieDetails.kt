@@ -45,7 +45,7 @@ fun MovieDetails(
 
     LazyColumn() {
         item {
-            if(movieDetails != null && movieCredits != null){
+            if (movieDetails != null && movieCredits != null) {
                 ImageAndInfo(movieDetails)
                 Spacer(Modifier.padding(10.dp))
 
@@ -55,11 +55,11 @@ fun MovieDetails(
                 Cast(Modifier.padding(start = 10.dp), movieCredits)
                 Spacer(Modifier.padding(10.dp))
 
-                Social(Modifier.padding(start = 10.dp))
+                //Social(Modifier.padding(start = 10.dp))
                 Spacer(Modifier.padding(10.dp))
 
                 Recommendations(movieId, detailsViewModel)
-            }else{
+            } else {
                 Text(text = stringResource(R.string.error_message_details))
             }
         }
@@ -79,7 +79,7 @@ fun ImageAndInfo(
     ) {
 
         Image(
-            painter = rememberAsyncImagePainter(movieDetails.posterPath),
+            painter = rememberAsyncImagePainter(movieDetails.backDropPath),
             contentDescription = stringResource(id = R.string.movie_cover),
             modifier = Modifier
                 .fillMaxSize()
